@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Feature
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -39,6 +40,11 @@ def register(request):
 
         if password == repeat_password:
             if User.objects.filter(email=email).exists():
-                message.info(request, 'Email Already used')
+                messages.info(request, 'Email Already used')
 
     return render(request, 'register.html')
+
+def dodaj_trase(request):
+    if request.method == 'POST':
+
+    return render(request, 'dodaj_trase.html')
