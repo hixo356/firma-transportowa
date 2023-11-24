@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        p {
+            color: blue;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign Up Below</h1>
+
+    <form method="POST" action="register">
+        {% csrf_token %}
+        <p>Username: </p>
+        <input type="username" name="username"/>
+        <p>Email: </p>
+        <input type="email" name="email"/>
+        <p>Password: </p>
+        <input type="password" name="password"/>
+        <p>Repeat Password: </p>
+        <input type="password" name="repeat_password"/><br>
+        <input type="submit"/>
+    </form>
+</body>
+</html>

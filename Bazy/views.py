@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Feature
 from django.contrib.auth.models import User
+
 # Create your views here.
 def index(request):
 
@@ -27,3 +28,17 @@ def index(request):
     features = [feature1, feature2, feature3, feature4]
 
     return render(request, 'index.html', {'features': features})
+
+def register(request):
+    if request.method == 'POST':
+
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        repeat_password = request.POST['repeat_password']
+
+        if password == repeat_password:
+            if User.objects.filter(email=email).exists():
+                message.info(request, 'Email Already used')
+
+    return render(request, 'register.html')
