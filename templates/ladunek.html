@@ -17,12 +17,16 @@
         <h3>{{message}}</h3>
     {% endfor %}
 
-    <form action="Ladunek" method="POST">
+    <form action="ladunek" method="POST">
         {% csrf_token %}
         <p>Ladunek:</p>
         <input type="text" placeholder="masa" name="masa"/>
         <input type="text" placeholder="pojazd" name="pojazd"/>
-        <input type="text" placeholder="stan" name="stan"/><br>
+        <label>Stan pojazdu:</label>
+        <select name="stan">
+            <option value="N">Nowy</option>
+            <option value="U">Uzywany</option>
+        </select>
         <input type="submit"/>
 
     </form>

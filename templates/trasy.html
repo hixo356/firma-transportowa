@@ -3,8 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .popup {
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: none;
+        }
+        .popup-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888888;
+            width: 30%;
+            font-weight: bolder;
+        }
+        .popup-content button {
+            display: block;
+            margin: 0 auto;
+        }
+        .show {
+            display: block;
+        }
+        h1 {
+            color: green;
+        }
+    </style>
 </head>
 <body>
 
+    <form method="POST" action="trasy">
+        {% csrf_token %}
+        <p>Zleceniodawca:</p>
+        <input type="zleceniodawca" name="zleceniodawca"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
+        <p>Ładunek:</p>
+        <select id="ladunek-sel" name="ladunek" class="select-database">
+            <optgroup label="ID | Marka | Masa pojazdu | Stan">
+            {% for ladunek in ladunki %}
+            <option value={{ladunek.id_ladunek}}>{{ladunek.id_ladunek}} | {{ladunek.pojazd}} | {{ladunek.masa}} | {{ladunek.stan}}</option>
+            {% endfor %}
+            </optgroup>
+            <option value="">Dodaj nowy ładunek...</option>
+        </select><button onclick="window.open('ladunek','_blank','popup, width=900, height=500, top=150, left=200');">+</button>
+        <button id="myButton" type="button">
+          Click me
+        </button>
+        <p>Początek:</p>
+        <input type="poczatek" name="poczatek"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
+        <p>Destynacja:</p>
+        <input type="destynacja" name="destynacja"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
+        <p>Kierowca:</p>
+        <input type="kierowca" name="kierowca"/>
+        <p>Przychod:</p>
+        <input type="przychod" name="przychod"/>
+        <input type="submit" name="ftrasa"/>
+    </form>
+
+    <div id="myPopup" class="popup">
+        <div class="popup-content">
+            <h1>Dodawanie nowego ładunku</h1>
+            <form action="trasy" method="POST">
+                {% csrf_token %}
+                <p>Ladunek:</p>
+                <input type="text" placeholder="masa" name="masa"/>
+                <input type="text" placeholder="pojazd" name="pojazd"/>
+                <label>Stan pojazdu:</label>
+                <select name="stan">
+                    <option value="N">Nowy</option>
+                    <option value="U">Uzywany</option>
+                </select>
+                <input type="submit" name="fladunek"/>
+            </form>
+            <button id="closePopup">
+                  Close
+              </button>
+        </div>
+    </div>
+
+    <script>
+        myButton.addEventListener("click", function () {
+                myPopup.classList.add("show");
+            });
+        closePopup.addEventListener("click", function () {
+                myPopup.classList.remove("show");
+            });
+        window.addEventListener("click", function (event) {
+                if (event.target == myPopup) {
+                    myPopup.classList.remove("show");
+                }
+            });
+
+        document.getElementById("ladunek-sel").onchange = changeListener;
+
+        function changeListener(){
+          var value = this.value
+            console.log(value);
+
+            if (value == ""){
+              myPopup.classList.add("show");
+            }
+
+        }
+    </script>
 </body>
 </html>
