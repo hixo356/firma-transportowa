@@ -13,6 +13,15 @@
 </head>
 <body>
     <h1>Sign Up Below</h1>
+    <style>
+     h5{
+        color: red;
+      }
+    </style>
+
+    {% for message in massages %}
+    <h5>{{message}}</h5>
+    {% endfor %}
 
     <form method="POST" action="register">
         {% csrf_token %}
