@@ -1,35 +1,33 @@
 from django.shortcuts import render, redirect
-from .models import Feature
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib import auth
+from .models import *
 
-=========
->>>>>>>>> Temporary merge branch 2
 # Create your views here.
 def index(request):
 
     feature1 = Feature()
     feature1.id = 0
-    feature1.name = 'jakas nazwa'
-    feature1.details = ' szczegoly GDGSD GGD'
+    feature1.name = 'Trasy'
+    feature1.details = ' '
+    feature1.url = 'trasy'
 
     feature2 = Feature()
     feature2.id = 1
-    feature2.name = 'jakas nazwa'
-    feature2.details = ' szczegoly GDGSD GGD'
+    feature2.name = 'Kierowcy'
+    feature2.details = ' '
+    feature2.url = 'kierowcy'
 
     feature3 = Feature()
     feature3.id = 2
-    feature3.name = 'jakas nazwa'
-    feature3.details = ' szczegoly GDGSD GGD'
+    feature3.name = 'Pojazdy'
+    feature3.details = ' '
+    feature3.url = 'pojazd'
 
-    feature4 = Feature()
-    feature4.id = 3
-    feature4.name = 'jakas nazwa'
-    feature4.details = ' szczegoly GDGSD GGD'
 
-    features = [feature1, feature2, feature3, feature4]
+
+    features = [feature1, feature2, feature3]
 
     return render(request, 'index.html', {'features': features})
 
@@ -86,9 +84,17 @@ def trasy(request):
 
 
 def pojazd(request):
+    if request.method == "POST":
+
+        marka = request.POST['marka']
+        ubezpieczenie = request.POST['ubezpieczenie']
+        przeglad = request.POST['przeglad']
+        id_kierowca = request.POST['id_kierowca']
+        nr_rejestracyjny = request.POST['nr_rejestracyjny']
+
+        kierowca = Kierowca.objects.get(pk=id_kierowca)
+        p = Pojazd(marka=marka, ubezpieczenie=ubezpieczenie, przeglad=przeglad, id_kierowca=kierowca, nr_rejestracyjny=nr_rejestracyjny)
+        p.save()
+
+
     return render(request, 'pojazd.html')
-
-def dodaj_trase(request):
-    if request.method == 'POST':
-
-    return render(request, 'dodaj_trase.html')

@@ -6,5 +6,20 @@
 </head>
 <body>
 
+    <form method="POST" action="pojazd">
+        {% csrf_token %}
+        <p>Marka:</p>
+        <input type="marka" name="marka"/>
+        <p>Ubezpieczenie:</p>
+        <input type="ubezpieczenie" name="ubezpieczenie"/>
+        <p>Przegląd:</p>
+        <input type="przeglad" name="przeglad"/>
+        <p>Kierowca:</p>
+        <input type="id_kierowca" name="id_kierowca"/>
+        <p>Numery rejestracyjne:</p>
+        <input type="nr_rejestracyjny" name="nr_rejestracyjny"/>
+        <input type="submit"/>
+    </form>
+
 </body>
 </html>
