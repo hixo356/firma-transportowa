@@ -23,7 +23,8 @@ def index(request):
     feature3.id = 2
     feature3.name = 'Pojazdy'
     feature3.details = ' '
-    feature3.url = 'pojazdy'
+    feature3.url = 'pojazd'
+
 
 
     features = [feature1, feature2, feature3]
@@ -81,5 +82,5 @@ def trasy(request):
     return render(request, 'trasy.html')
 
 
-def pojazdy(request):
-    return render(request, 'pojazdy.html')
+def pojazd(request):
+    return render(request, 'pojazd.html')
