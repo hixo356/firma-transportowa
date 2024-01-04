@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib import auth
-from .models import *
 
 # Create your views here.
 def index(request):
@@ -47,7 +47,7 @@ def register(request):
                 messages.info(request, 'User already used')
                 return redirect('register')
             else:
-                user = User.objects.create_user(username=username, email= email, password = password)
+                user = User.objects.create_user(username=username, email=email, password = password)
                 user.save();
                 return redirect('login')
         else:
@@ -61,7 +61,7 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username = username, password = password)
+        user = auth.authenticate(username=username, password=password)
 
         if user is not None:
             auth.login(request, user)
@@ -74,6 +74,14 @@ def login(request):
 
 
 def kierowcy(request):
+    if request.method == 'POST':
+        imie = request.POST['imie']
+        nazwisko = request.POST['nazwisko']
+        pesel = request.POST['pesel']
+        telefon = request.POST['telefon']
+
+        kierowca = Kierowca.objects.create(imie=imie, nazwisko=nazwisko, pesel=pesel, telefon=telefon)
+        kierowca.save();
 
     return render(request, 'kierowcy.html')
 
@@ -98,3 +106,54 @@ def pojazd(request):
 
 
     return render(request, 'pojazd.html')
+
+
+def destynacja(request):
+    if request.method == "POST":
+        id_destynacja = request.POST['id_destynacja']
+        adres = request.POST['adres']
+        wspolrzedne = request.POST['wspolrzedne']
+        telefon = request.POST['telefon']
+
+        d = Destynacja.objects.create(id_destynacja=id_destynacja, adres=adres, wspolrzedne =wspolrzedne , telefon=telefon)
+        d.save();
+
+    return render(request, 'destynacja.html')
+
+
+def ladunek(request):
+    if request.method == "POST":
+        id_ladunek = request.POST['id_ladunek']
+        masa = request.POST['masa']
+        pojazd = request.POST['pojazd']
+        stan = request.POST['stan']
+
+        l= Ladunek.objects.create(id_ladunek=id_ladunek, masa =masa , pojazd=pojazd,
+                                  stan=stan)
+        l.save();
+
+    return render(request, 'ladunek.html')
+
+def poczatek(request):
+    if request.method == "POST":
+        id_poczatek = request.POST['id_poczatek']
+        adres = request.POST['adres']
+        wspolrzedne = request.POST['wspolrzedne']
+        telefon = request.POST['telefon']
+
+        p = Poczatek.objects.create(id_poczatek=id_poczatek, adres=adres, wspolrzedne=wspolrzedne,
+                                      telefon=telefon)
+        p.save();
+    return render(request, 'poczatek.html')
+
+def zleceniodawca(request):
+    if request.method == "POST":
+        id_zleceniodawca = request.POST['id_zleceniodawca']
+        telefon = request.POST['id_zleceniodawca']
+        nip = request.POST['nip']
+        regon = request.POST['regon']
+
+        z = Zleceniodawca.objects.create(id_zleceniodawca=id_zleceniodawca, nip=nip, regon=regon,
+                                    telefon=telefon)
+        z.save();
+    return render(request, 'zleceniodawca.html')
