@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        h3 {
+            color: red;
+        }
+
+        input[type="password"] {
+            /* Your preferred styles for password input */
+            font-family: monospace; /* optional */
+        }
+    </style>
+</head>
+<body>
+    {% for message in messages %}
+        <h3>{{message}}</h3>
+    {% endfor %}
+
+    <form action="login" method="POST">
+        {% csrf_token %}
+        <p>Username:</p>
+        <input type="text" name="username"/>
+        <p>Password:</p>
+        <input type="password" name="password"/><br>
+        <input type="submit"/>
+    </form>
+</body>
+</html>
