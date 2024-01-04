@@ -47,7 +47,7 @@ def register(request):
                 messages.info(request, 'User already used')
                 return redirect('register')
             else:
-                user = User.objects.create_user(username=username, email= email, password = password)
+                user = User.objects.create_user(username=username, email=email, password = password)
                 user.save();
                 return redirect('login')
         else:
@@ -61,7 +61,7 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username = username, password = password)
+        user = auth.authenticate(username=username, password=password)
 
         if user is not None:
             auth.login(request, user)
@@ -74,6 +74,14 @@ def login(request):
 
 
 def kierowcy(request):
+    if request.method == 'POST':
+        imie = request.POST['imie']
+        nazwisko = request.POST['nazwisko']
+        pesel = request.POST['pesel']
+        telefon = request.POST['telefon']
+
+        kierowca = Kierowca.objects.create(imie=imie, nazwisko=nazwisko, pesel=pesel, telefon=telefon)
+        kierowca.save();
 
     return render(request, 'kierowcy.html')
 
