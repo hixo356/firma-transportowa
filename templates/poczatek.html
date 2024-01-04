@@ -17,12 +17,11 @@
         <h3>{{message}}</h3>
     {% endfor %}
 
-    <form action="kierowcy" method="POST">
+    <form action="Poczatek" method="POST">
         {% csrf_token %}
         <p>Kierowca:</p>
-        <input type="text" placeholder="imie" name="imie"/>
-        <input type="text" placeholder="nazwisko" name="nazwisko"/>
-        <input type="text" placeholder="pesel" name="pesel"/>
+        <input type="text" placeholder="adres" name="adres"/>
+        <input type="text" placeholder="wspolrzedne" name="wspolrzedne"/>
         <input type="text" placeholder="telefon" name="telefon"/><br>
         <input type="submit"/>
 

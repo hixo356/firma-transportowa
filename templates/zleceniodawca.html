@@ -19,10 +19,9 @@
 
     <form action="kierowcy" method="POST">
         {% csrf_token %}
-        <p>Kierowca:</p>
-        <input type="text" placeholder="imie" name="imie"/>
-        <input type="text" placeholder="nazwisko" name="nazwisko"/>
-        <input type="text" placeholder="pesel" name="pesel"/>
+        <p>Zleceniodawca:</p>
+        <input type="text" placeholder="regon " name="regon "/>
+        <input type="text" placeholder="nip" name="nip"/>
         <input type="text" placeholder="telefon" name="telefon"/><br>
         <input type="submit"/>
 

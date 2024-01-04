@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Feature
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib import auth
@@ -88,8 +88,73 @@ def kierowcy(request):
 
 def trasy(request):
 
+
     return render(request, 'trasy.html')
 
 
 def pojazd(request):
+    if request.method == "POST":
+
+        marka = request.POST['marka']
+        ubezpieczenie = request.POST['ubezpieczenie']
+        przeglad = request.POST['przeglad']
+        id_kierowca = request.POST['id_kierowca']
+        nr_rejestracyjny = request.POST['nr_rejestracyjny']
+
+        kierowca = Kierowca.objects.get(pk=id_kierowca)
+        p = Pojazd(marka=marka, ubezpieczenie=ubezpieczenie, przeglad=przeglad, id_kierowca=kierowca, nr_rejestracyjny=nr_rejestracyjny)
+        p.save()
+
+
     return render(request, 'pojazd.html')
+
+
+def destynacja(request):
+    if request.method == "POST":
+        id_destynacja = request.POST['id_destynacja']
+        adres = request.POST['adres']
+        wspolrzedne = request.POST['wspolrzedne']
+        telefon = request.POST['telefon']
+
+        d = Destynacja.objects.create(id_destynacja=id_destynacja, adres=adres, wspolrzedne =wspolrzedne , telefon=telefon)
+        d.save();
+
+    return render(request, 'destynacja.html')
+
+
+def ladunek(request):
+    if request.method == "POST":
+        id_ladunek = request.POST['id_ladunek']
+        masa = request.POST['masa']
+        pojazd = request.POST['pojazd']
+        stan = request.POST['stan']
+
+        l= Ladunek.objects.create(id_ladunek=id_ladunek, masa =masa , pojazd=pojazd,
+                                  stan=stan)
+        l.save();
+
+    return render(request, 'ladunek.html')
+
+def poczatek(request):
+    if request.method == "POST":
+        id_poczatek = request.POST['id_poczatek']
+        adres = request.POST['adres']
+        wspolrzedne = request.POST['wspolrzedne']
+        telefon = request.POST['telefon']
+
+        p = Poczatek.objects.create(id_poczatek=id_poczatek, adres=adres, wspolrzedne=wspolrzedne,
+                                      telefon=telefon)
+        p.save();
+    return render(request, 'poczatek.html')
+
+def zleceniodawca(request):
+    if request.method == "POST":
+        id_zleceniodawca = request.POST['id_zleceniodawca']
+        telefon = request.POST['id_zleceniodawca']
+        nip = request.POST['nip']
+        regon = request.POST['regon']
+
+        z = Zleceniodawca.objects.create(id_zleceniodawca=id_zleceniodawca, nip=nip, regon=regon,
+                                    telefon=telefon)
+        z.save();
+    return render(request, 'zleceniodawca.html')

@@ -35,7 +35,7 @@ class Kierowca(models.Model):
     nazwisko = models.CharField()
     pesel = models.CharField(max_length=11)
     telefon = models.CharField(max_length=12)
-    id_pojazd = models.ForeignKey("Pojazd", on_delete=models.SET(''))
+
 class Pojazd(models.Model):
     id_pojazd = models.AutoField(primary_key=True)
     marka = models.CharField()
