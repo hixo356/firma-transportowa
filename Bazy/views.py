@@ -79,6 +79,7 @@ def kierowcy(request):
 
 
 def trasy(request):
+
     return render(request, 'trasy.html')
 
 
