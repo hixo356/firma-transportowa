@@ -1,34 +1,42 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
-    <style>
-        h3 {
-            color: red;
-        }
-
-        input[type="password"] {
-            /* Your preferred styles for password input */
-            font-family: monospace; /* optional */
-        }
-    </style>
+    <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
 </head>
 <body>
     {% for message in messages %}
         <h3>{{message}}</h3>
     {% endfor %}
+    <div class="form-outside">
+        <form action="ladunek" method="POST" class="form-form">
+            {% csrf_token %}
+            <p>Ładunek:</p>
+            <input type="text" placeholder="masa" name="masa"/>
+            <input type="text" placeholder="pojazd" name="pojazd"/>
+            <label>Stan pojazdu:</label>
+            <select name="stan">
+                <option value="N">Nowy</option>
+                <option value="U">Uzywany</option>
+            </select>
+            <input type="submit" name="dodaj_ladunek"/>
+        </form>
+    </div>
 
-    <form action="ladunek" method="POST">
-        {% csrf_token %}
-        <p>Ladunek:</p>
-        <input type="text" placeholder="masa" name="masa"/>
-        <input type="text" placeholder="pojazd" name="pojazd"/>
-        <label>Stan pojazdu:</label>
-        <select name="stan">
-            <option value="N">Nowy</option>
-            <option value="U">Uzywany</option>
-        </select>
-        <input type="submit"/>
-
-    </form>
+    <!-- WYSWIETLANIE LADUNKOW -->
+    <div class="objects-list-outside">
+        <h1 style="position: relative; left: 15px">Wszystkie ładunki:</h1>
+        <div class="objects-list-inside">
+            <div class="objects-list-item">
+                <div class="objects-list-item-content"><div class="olic-child"><b>Pojazd</b></div><div class="olic-child"><b>Masa</b></div><div class="olic-child"><b>Stan</b></div></div>
+            </div>
+            {% for ladunek in ladunki %}
+                <div class="objects-list-item">
+                    <div class="objects-list-item-content"><div class="olic-child">{{ladunek.pojazd}}</div><div class="olic-child">{{ladunek.masa}}</div><div class="olic-child">{{ladunek.stan_read}}</div></div>
+                    <div style="display: flex; justify-content: space-around;"><button type="button" style="width: 55px;">Edytuj</button><form action="ladunek" method="post">{% csrf_token %}<button type="submit" name="usun_ladunek" value={{ladunek.id_ladunek}} style="width: 55px;">Usuń</button></form></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
-</html>l>
+</html>

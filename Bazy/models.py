@@ -13,12 +13,16 @@ class Destynacja(models.Model):
 class Ladunek(models.Model):
     STANY_POJ = [
         ("N", "Nowy"),
-        ("U", "Uzywany"),
+        ("U", "Używany"),
     ]
     id_ladunek = models.AutoField(primary_key=True)
     masa = models.CharField(max_length=5)
     pojazd = models.CharField()
     stan = models.CharField(max_length=1, choices=STANY_POJ)
+
+    def stan_read(self):
+        return self.get_stan_display()
+
 class Zleceniodawca(models.Model):
     id_zleceniodawca = models.AutoField(primary_key=True)
     telefon = models.CharField(max_length=12)

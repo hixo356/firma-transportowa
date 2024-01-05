@@ -21,7 +21,9 @@
             padding: 20px;
             border: 1px solid #888888;
             width: 30%;
+            height: 50%;
             font-weight: bolder;
+            overflow-y: scroll;
         }
         .popup-content button {
             display: block;
@@ -43,9 +45,9 @@
         <input type="zleceniodawca" name="zleceniodawca"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
         <p>Ładunek:</p>
         <select id="ladunek-sel" name="ladunek" class="select-database">
-            <optgroup label="ID | Marka | Masa pojazdu | Stan">
+            <optgroup label="Marka | Masa pojazdu | Stan">
             {% for ladunek in ladunki %}
-            <option value={{ladunek.id_ladunek}}>{{ladunek.id_ladunek}} | {{ladunek.pojazd}} | {{ladunek.masa}} | {{ladunek.stan}}</option>
+            <option value={{ladunek.id_ladunek}}>{{ladunek.pojazd}} | {{ladunek.masa}} | {{ladunek.stan}}</option>
             {% endfor %}
             </optgroup>
             <option value="">Dodaj nowy ładunek...</option>
@@ -81,7 +83,35 @@
             </form>
             <button id="closePopup">
                   Close
-              </button>
+            </button>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+            <div>HALOHALO</div>
+
         </div>
     </div>
 

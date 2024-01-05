@@ -87,14 +87,22 @@ def kierowcy(request):
     return render(request, 'kierowcy.html')
 
 
+def dodaj_ladunek(request):
+    masa = request.POST['masa']
+    pojazd = request.POST['pojazd']
+    stan = request.POST['stan']
+    l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
+    l.save()
+    return True
+
+
 def trasy(request):
 
     ladunki = Ladunek.objects.all()
 
     if request.method == "POST" and "fladunek" in request.POST:
-    #DODANIE LADUNKU
-    if request.method == "POST" and "ftrasa" in request.POST:
-    #DODANIE TRASY
+        dodaj_ladunek(request)
+    # if request.method == "POST" and "ftrasa" in request.POST:
 
     return render(request, 'trasy.html', {'ladunki': ladunki})
 
@@ -128,15 +136,17 @@ def destynacja(request):
 
 
 def ladunek(request):
-    if request.method == "POST":
-        masa = request.POST['masa']
-        pojazd = request.POST['pojazd']
-        stan = request.POST['stan']
-        l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
-        l.save()
-        return HttpResponse('<body onload="window.close();">')
+    if request.method == 'POST':
+        if "dodaj_ladunek" in request.POST:
+            if dodaj_ladunek(request):
+                return HttpResponse('<body onload="window.close();">')
+        elif "usun_ladunek" in request.POST:
+            do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
+            do_usuniecia.delete()
 
-    return render(request, 'ladunek.html')
+    ladunki = Ladunek.objects.all()
+
+    return render(request, 'ladunek.html', {'ladunki': ladunki})
 
 def poczatek(request):
     if request.method == "POST":
