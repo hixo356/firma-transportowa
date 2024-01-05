@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib import auth
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -86,15 +87,28 @@ def kierowcy(request):
     return render(request, 'kierowcy.html')
 
 
+def dodaj_ladunek(request):
+    masa = request.POST['masa']
+    pojazd = request.POST['pojazd']
+    stan = request.POST['stan']
+    l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
+    l.save()
+    return True
+
+
 def trasy(request):
 
+    ladunki = Ladunek.objects.all()
 
-    return render(request, 'trasy.html')
+    if request.method == "POST" and "fladunek" in request.POST:
+        dodaj_ladunek(request)
+    # if request.method == "POST" and "ftrasa" in request.POST:
+
+    return render(request, 'trasy.html', {'ladunki': ladunki})
 
 
 def pojazd(request):
     if request.method == "POST":
-
         marka = request.POST['marka']
         ubezpieczenie = request.POST['ubezpieczenie']
         przeglad = request.POST['przeglad']
@@ -111,50 +125,47 @@ def pojazd(request):
 
 def destynacja(request):
     if request.method == "POST":
-        id_destynacja = request.POST['id_destynacja']
         adres = request.POST['adres']
         wspolrzedne = request.POST['wspolrzedne']
         telefon = request.POST['telefon']
 
-        d = Destynacja.objects.create(id_destynacja=id_destynacja, adres=adres, wspolrzedne =wspolrzedne , telefon=telefon)
+        d = Destynacja.objects.create(adres=adres, wspolrzedne =wspolrzedne , telefon=telefon)
         d.save();
 
     return render(request, 'destynacja.html')
 
 
 def ladunek(request):
-    if request.method == "POST":
-        id_ladunek = request.POST['id_ladunek']
-        masa = request.POST['masa']
-        pojazd = request.POST['pojazd']
-        stan = request.POST['stan']
+    if request.method == 'POST':
+        if "dodaj_ladunek" in request.POST:
+            if dodaj_ladunek(request):
+                return HttpResponse('<body onload="window.close();">')
+        elif "usun_ladunek" in request.POST:
+            do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
+            do_usuniecia.delete()
 
-        l= Ladunek.objects.create(id_ladunek=id_ladunek, masa =masa , pojazd=pojazd,
-                                  stan=stan)
-        l.save();
+    ladunki = Ladunek.objects.all()
 
-    return render(request, 'ladunek.html')
+    return render(request, 'ladunek.html', {'ladunki': ladunki})
 
 def poczatek(request):
     if request.method == "POST":
-        id_poczatek = request.POST['id_poczatek']
         adres = request.POST['adres']
         wspolrzedne = request.POST['wspolrzedne']
         telefon = request.POST['telefon']
 
-        p = Poczatek.objects.create(id_poczatek=id_poczatek, adres=adres, wspolrzedne=wspolrzedne,
+        p = Poczatek.objects.create(adres=adres, wspolrzedne=wspolrzedne,
                                       telefon=telefon)
         p.save();
     return render(request, 'poczatek.html')
 
 def zleceniodawca(request):
     if request.method == "POST":
-        id_zleceniodawca = request.POST['id_zleceniodawca']
         telefon = request.POST['id_zleceniodawca']
         nip = request.POST['nip']
         regon = request.POST['regon']
 
-        z = Zleceniodawca.objects.create(id_zleceniodawca=id_zleceniodawca, nip=nip, regon=regon,
+        z = Zleceniodawca.objects.create(nip=nip, regon=regon,
                                     telefon=telefon)
         z.save();
     return render(request, 'zleceniodawca.html')
