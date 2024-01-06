@@ -1,41 +1,10 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        .popup {
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            display: none;
-        }
-        .popup-content {
-            background-color: white;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888888;
-            width: 30%;
-            height: 50%;
-            font-weight: bolder;
-            overflow-y: scroll;
-        }
-        .popup-content button {
-            display: block;
-            margin: 0 auto;
-        }
-        .show {
-            display: block;
-        }
-        h1 {
-            color: green;
-        }
-    </style>
+    <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
 </head>
 <body>
 
@@ -52,9 +21,14 @@
             </optgroup>
             <option value="">Dodaj nowy ładunek...</option>
         </select><button onclick="window.open('ladunek','_blank','popup, width=900, height=500, top=150, left=200');">+</button>
-        <button id="myButton" type="button">
-          Click me
-        </button>
+        <form method="POST" action="trasy">
+            {% csrf_token %}
+            <button type="submit" name="ladunki" value="1">Popup</button>
+
+            <!--            <button id="myButton" type="button">-->
+<!--              Click me-->
+<!--            </button>-->
+        </form>
         <p>Początek:</p>
         <input type="poczatek" name="poczatek"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
         <p>Destynacja:</p>
@@ -66,79 +40,27 @@
         <input type="submit" name="ftrasa"/>
     </form>
 
-    <div id="myPopup" class="popup">
-        <div class="popup-content">
-            <h1>Dodawanie nowego ładunku</h1>
-            <form action="trasy" method="POST">
-                {% csrf_token %}
-                <p>Ladunek:</p>
-                <input type="text" placeholder="masa" name="masa"/>
-                <input type="text" placeholder="pojazd" name="pojazd"/>
-                <label>Stan pojazdu:</label>
-                <select name="stan">
-                    <option value="N">Nowy</option>
-                    <option value="U">Uzywany</option>
-                </select>
-                <input type="submit" name="fladunek"/>
-            </form>
-            <button id="closePopup">
-                  Close
-            </button>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-            <div>HALOHALO</div>
-
+    {% if ladunki_popup %}
+        <div id="myPopup" class="popup">
+            <div class="popup-content">
+                {% include 'dodawanie_ladunku.html' %}
+                {% include 'wyswietlanie_ladunkow.html' %}
+            </div>
         </div>
-    </div>
+    {% endif %}
+
+
 
     <script>
-        myButton.addEventListener("click", function () {
-                myPopup.classList.add("show");
-            });
-        closePopup.addEventListener("click", function () {
-                myPopup.classList.remove("show");
-            });
-        window.addEventListener("click", function (event) {
-                if (event.target == myPopup) {
-                    myPopup.classList.remove("show");
-                }
-            });
+<!--        function changeListener(){-->
+<!--          var value = this.value-->
+<!--            console.log(value);-->
 
-        document.getElementById("ladunek-sel").onchange = changeListener;
+<!--            if (value == ""){-->
+<!--              myPopup.classList.add("show");-->
+<!--            }-->
 
-        function changeListener(){
-          var value = this.value
-            console.log(value);
-
-            if (value == ""){
-              myPopup.classList.add("show");
-            }
-
-        }
+<!--        }-->
     </script>
 </body>
 </html>

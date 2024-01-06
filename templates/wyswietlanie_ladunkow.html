@@ -1,0 +1,14 @@
+<div class="objects-list-outside">
+    <h2 style="position: relative; left: 15px">Wszystkie ładunki:</h2>
+    <div class="objects-list-inside">
+        <div class="objects-list-item">
+            <div class="objects-list-item-content"><div class="olic-child"><b>Pojazd</b></div><div class="olic-child"><b>Masa</b></div><div class="olic-child"><b>Stan</b></div></div>
+        </div>
+        {% for ladunek in ladunki %}
+            <div class="objects-list-item">
+                <div class="objects-list-item-content"><div class="olic-child">{{ladunek.pojazd}}</div><div class="olic-child">{{ladunek.masa}}</div><div class="olic-child">{{ladunek.stan_read}}</div></div>
+                <div style="display: flex; justify-content: space-around;"><button type="button" style="width: 55px;">Edytuj</button><form action="trasy" method="post">{% csrf_token %}<button type="submit" name="usun_ladunek" value={{ladunek.id_ladunek}} style="width: 55px;">Usuń</button></form></div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

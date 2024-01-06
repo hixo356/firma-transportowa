@@ -95,16 +95,49 @@ def dodaj_ladunek(request):
     l.save()
     return True
 
+def usun_ladunek(request):
+    do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
+    do_usuniecia.delete()
+    return True
 
 def trasy(request):
+    print(request.POST)
+    ladunki_obj = Ladunek.objects.all()
 
-    ladunki = Ladunek.objects.all()
+    # ladunki_popup = request.POST['ladunki']
+    ladunki_popup = request.POST.get('ladunki', 1)
+    # print(ladunki_popup)
 
-    if request.method == "POST" and "fladunek" in request.POST:
+    if request.method == 'POST':
+        if "dodaj_ladunek" in request.POST:
+            if dodaj_ladunek(request):
+                print("dodano ladunek")
+        if "usun_ladunek" in request.POST:
+            if usun_ladunek(request):
+                print("usunieto ladunek")
+        if int(ladunki_popup) == 1:
+            print("POPUP ON")
+            return render(request, 'trasy.html', {'ladunki': ladunki_obj, 'ladunki_popup': 1})
+        elif int(ladunki_popup) == 0:
+            print("POPUP OFF")
+            return render(request, 'trasy.html', {'ladunki': ladunki_obj, 'ladunki_popup': 0})
+
+    return render(request, 'trasy.html', {'ladunki': ladunki_obj, 'ladunki_popup': 0})
+
+def ladunek_popup(request):
+    if request.method == 'POST':
         dodaj_ladunek(request)
-    # if request.method == "POST" and "ftrasa" in request.POST:
 
-    return render(request, 'trasy.html', {'ladunki': ladunki})
+def ladunek(request):
+    if request.method == 'POST':
+        if "dodaj_ladunek" in request.POST:
+            if dodaj_ladunek(request):
+                return HttpResponse('<body onload="window.close();">')
+        elif "usun_ladunek" in request.POST:
+            do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
+            do_usuniecia.delete()
+
+    return render(request, 'ladunek.html')
 
 
 def pojazd(request):
@@ -135,18 +168,12 @@ def destynacja(request):
     return render(request, 'destynacja.html')
 
 
-def ladunek(request):
-    if request.method == 'POST':
-        if "dodaj_ladunek" in request.POST:
-            if dodaj_ladunek(request):
-                return HttpResponse('<body onload="window.close();">')
-        elif "usun_ladunek" in request.POST:
-            do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
-            do_usuniecia.delete()
 
-    ladunki = Ladunek.objects.all()
 
-    return render(request, 'ladunek.html', {'ladunki': ladunki})
+
+    ladunki_obj = Ladunek.objects.all()
+
+    return render(request, 'ladunek.html', {'ladunki': ladunki_obj})
 
 def poczatek(request):
     if request.method == "POST":

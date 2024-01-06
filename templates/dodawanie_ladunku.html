@@ -1,0 +1,18 @@
+<div class="form-outside">
+    <form action="trasy" method="POST" class="form-form">
+        {% csrf_token %}
+        <p>Ładunek:</p>
+        <input type="text" placeholder="masa" name="masa"/>
+        <input type="text" placeholder="pojazd" name="pojazd"/>
+        <label>Stan pojazdu:</label>
+        <select name="stan">
+            <option value="N">Nowy</option>
+            <option value="U">Uzywany</option>
+        </select>
+        <button type="submit" name="dodaj_ladunek">Dodaj</button>
+    </form>
+    <form method="POST" action="trasy">
+        {% csrf_token %}
+        <button type="submit" name="ladunki" value="0">Close</button>
+    </form>
+</div>
