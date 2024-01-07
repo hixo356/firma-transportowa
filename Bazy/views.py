@@ -93,7 +93,7 @@ def dodaj_ladunek(request):
     stan = request.POST['stan']
     l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
     l.save()
-    return True
+    return l.pk
 
 def usun_ladunek(request):
     do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
@@ -102,27 +102,59 @@ def usun_ladunek(request):
 
 def trasy(request):
     print(request.POST)
-    ladunki_obj = Ladunek.objects.all()
+
+    database = {'ladunki_obj': Ladunek.objects.all(),
+                'zlec_obj': Zleceniodawca.objects.all(),
+                'pocz_obj': Poczatek.objects.all(),
+                'dest_obj': Destynacja.objects.all(),
+                'kier_obj': Kierowca.objects.all()}
+
+    # sel_objects = {'zleceniodawca': "",
+    #                'ladunek': "",
+    #                'poczatek': "",
+    #                'destynacja': "",
+    #                'kierowca': "",
+    #                'przychod': ""}
 
     # ladunki_popup = request.POST['ladunki']
-    ladunki_popup = request.POST.get('ladunki', 1)
+    popup = request.POST.get('popup', 0)
     # print(ladunki_popup)
 
     if request.method == 'POST':
         if "dodaj_ladunek" in request.POST:
-            if dodaj_ladunek(request):
-                print("dodano ladunek")
-        if "usun_ladunek" in request.POST:
+            if request.POST['dodaj_ladunek'] == "dod":
+                dodaj_ladunek(request)
+                popup = 1
+            elif request.POST['dodaj_ladunek'] == "wyb":
+                sel_id = dodaj_ladunek(request)
+                sel_ladunek = Ladunek.objects.get(pk=sel_id)
+                return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_ladunek': sel_ladunek})
+        elif "usun_ladunek" in request.POST:
             if usun_ladunek(request):
                 print("usunieto ladunek")
-        if int(ladunki_popup) == 1:
-            print("POPUP ON")
-            return render(request, 'trasy.html', {'ladunki': ladunki_obj, 'ladunki_popup': 1})
-        elif int(ladunki_popup) == 0:
-            print("POPUP OFF")
-            return render(request, 'trasy.html', {'ladunki': ladunki_obj, 'ladunki_popup': 0})
+                popup = 1
+        elif "wybierz_ladunek" in request.POST:
+            sel_id = request.POST['wybierz_ladunek']
+            sel_ladunek = Ladunek.objects.get(pk=sel_id)
+            return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_ladunek': sel_ladunek})
 
-    return render(request, 'trasy.html', {'ladunki': ladunki_obj, 'ladunki_popup': 0})
+        match int(popup):
+            case 0:
+                print("POPUP OFF")
+                return render(request, 'trasy.html', {'database': database, 'popup': 0})
+            case 1:
+                print("POPUP ON")
+                return render(request, 'trasy.html', {'database': database, 'popup': 1})
+            case _:
+                return render(request, 'trasy.html', {'database': database, 'popup': 0})
+
+
+    return render(request, 'trasy.html', {'popup': 0, 'database': database,
+                                          'sel_ladunek': "",
+                                          'sel_zlec': "",
+                                          'sel_pocz': "",
+                                          'sel_dest': "",
+                                          'sel_kier': ""})
 
 def ladunek_popup(request):
     if request.method == 'POST':

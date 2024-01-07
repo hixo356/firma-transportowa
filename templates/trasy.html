@@ -7,44 +7,56 @@
     <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
 </head>
 <body>
-
-    <form method="POST" action="trasy">
-        {% csrf_token %}
-        <p>Zleceniodawca:</p>
-        <input type="zleceniodawca" name="zleceniodawca"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
-        <p>Ładunek:</p>
-        <select id="ladunek-sel" name="ladunek" class="select-database">
-            <optgroup label="Marka | Masa pojazdu | Stan">
-            {% for ladunek in ladunki %}
-            <option value={{ladunek.id_ladunek}}>{{ladunek.pojazd}} | {{ladunek.masa}} | {{ladunek.stan}}</option>
-            {% endfor %}
-            </optgroup>
-            <option value="">Dodaj nowy ładunek...</option>
-        </select><button onclick="window.open('ladunek','_blank','popup, width=900, height=500, top=150, left=200');">+</button>
-        <form method="POST" action="trasy">
+    <div class="trasy-form-outside">
+        <form method="POST" action="trasy" class="trasy-form-form">
             {% csrf_token %}
-            <button type="submit" name="ladunki" value="1">Popup</button>
-
-            <!--            <button id="myButton" type="button">-->
-<!--              Click me-->
-<!--            </button>-->
+            <div>
+                <p>Zleceniodawca:</p>
+                <input type="text" name="zleceniodawca"/><button onclick="window.open('zleceniodawca','_blank');">+</button>
+            </div>
+            <div>
+                <p>Ładunek:</p>
+                <textarea readonly name="ladunek" class="textarea-selected-object">{% if sel_ladunek %}{{sel_ladunek.pojazd}} | {{sel_ladunek.masa}} kg | {{sel_ladunek.stan_read}}{% else %}{% endif %}</textarea>
+<!--                <form method="POST" action="trasy">-->
+<!--                    {% csrf_token %}-->
+                    <button type="submit" name="popup" value="1">Dodaj nowy/wybierz ładunek</button>
+<!--                </form>-->
+            </div>
+            <div>
+                <p>Początek:</p>
+                <input type="text" name="poczatek"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
+            </div>
+            <div>
+                <p>Destynacja:</p>
+                <input type="text" name="destynacja"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
+            </div>
+            <div>
+                <p>Kierowca:</p>
+                <input type="text" name="kierowca"/>
+            </div>
+            <div>
+                <p>Przychod:</p>
+                <input type="text" name="przychod"/>
+            </div>
+            <div>
+                <input type="submit" name="ftrasa"/>
+            </div>
         </form>
-        <p>Początek:</p>
-        <input type="poczatek" name="poczatek"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
-        <p>Destynacja:</p>
-        <input type="destynacja" name="destynacja"/><button onclick="window.open('zleceniodawca','_blank','popup');">+</button>
-        <p>Kierowca:</p>
-        <input type="kierowca" name="kierowca"/>
-        <p>Przychod:</p>
-        <input type="przychod" name="przychod"/>
-        <input type="submit" name="ftrasa"/>
-    </form>
+    </div>
 
-    {% if ladunki_popup %}
+    {% if popup %}
         <div id="myPopup" class="popup">
             <div class="popup-content">
-                {% include 'dodawanie_ladunku.html' %}
-                {% include 'wyswietlanie_ladunkow.html' %}
+                <div style="display: flex; justify-content: flex-end; position: relative; top: -10px; right: -10px;">
+                    <form method="POST" action="trasy" style="position: absolute; width: 24px; height: 24px;">
+                        {% csrf_token %}
+                        <button type="submit" name="ladunki" value="0" style="width: 100%; height: 100%; border-radius: 6px;">X</button>
+                    </form>
+                </div>
+                {% if popup == 1 %}
+                    {% include 'dodawanie_ladunku.html' %}
+                    {% include 'wyswietlanie_ladunkow.html' %}
+                {% endif %}
             </div>
         </div>
     {% endif %}

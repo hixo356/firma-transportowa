@@ -1,0 +1,11 @@
+<div id="myPopup" class="popup">
+    <div class="popup-content">
+        <div style="display: flex; justify-content: flex-end; position: relative; top: -10px; right: -10px;">
+            <form method="POST" action="trasy" style="position: absolute; width: 24px; height: 24px;">
+                {% csrf_token %}
+                <button type="submit" name="ladunki" value="0" style="width: 100%; height: 100%; border-radius: 6px;">X</button>
+            </form>
+        </div>
+        {% block popup-content %}{% endblock %}
+    </div>
+</div>
