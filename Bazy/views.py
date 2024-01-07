@@ -88,12 +88,24 @@ def kierowcy(request):
 
 
 def dodaj_ladunek(request):
-    masa = request.POST['masa']
-    pojazd = request.POST['pojazd']
-    stan = request.POST['stan']
-    l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
-    l.save()
-    return l.pk
+    err = [-1, 1, 1, 1]
+    if 'masa' in request.POST:
+        masa = request.POST['masa']
+        err[1] = 0
+    if 'pojazd' in request.POST:
+        pojazd = request.POST['pojazd']
+        err[2] = 0
+    if 'stan' in request.POST:
+        stan = request.POST['stan']
+        err[3] = 0
+
+    if 1 in err:
+        return err
+
+    new_l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
+    new_l.save()
+    err[0] = new_l.pk
+    return err
 
 def usun_ladunek(request):
     do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
@@ -121,18 +133,20 @@ def trasy(request):
     # print(ladunki_popup)
 
     if request.method == 'POST':
+        if "test" in request.POST:
+            return render(request, 'test.html')
         if "dodaj_ladunek" in request.POST:
             if request.POST['dodaj_ladunek'] == "dod":
                 dodaj_ladunek(request)
-                popup = 1
+                popup = 2
             elif request.POST['dodaj_ladunek'] == "wyb":
-                sel_id = dodaj_ladunek(request)
+                sel_id = dodaj_ladunek(request)[0]
                 sel_ladunek = Ladunek.objects.get(pk=sel_id)
                 return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_ladunek': sel_ladunek})
         elif "usun_ladunek" in request.POST:
             if usun_ladunek(request):
                 print("usunieto ladunek")
-                popup = 1
+                popup = 2
         elif "wybierz_ladunek" in request.POST:
             sel_id = request.POST['wybierz_ladunek']
             sel_ladunek = Ladunek.objects.get(pk=sel_id)
@@ -142,9 +156,9 @@ def trasy(request):
             case 0:
                 print("POPUP OFF")
                 return render(request, 'trasy.html', {'database': database, 'popup': 0})
-            case 1:
-                print("POPUP ON")
-                return render(request, 'trasy.html', {'database': database, 'popup': 1})
+            case 2:
+                print("POPUP ladunek ON")
+                return render(request, 'trasy.html', {'database': database, 'popup': 2})
             case _:
                 return render(request, 'trasy.html', {'database': database, 'popup': 0})
 
@@ -198,14 +212,6 @@ def destynacja(request):
         d.save();
 
     return render(request, 'destynacja.html')
-
-
-
-
-
-    ladunki_obj = Ladunek.objects.all()
-
-    return render(request, 'ladunek.html', {'ladunki': ladunki_obj})
 
 def poczatek(request):
     if request.method == "POST":
