@@ -95,16 +95,27 @@ def dodaj_ladunek(request):
     l.save()
     return True
 
+def dodaj_zleceniodawce(request):
+    nazwa = request.POST['nazwa']
+    nip = request.POST['nip']
+    regon = request.POST['regon']
+    telefon = request.POST['telefon']
+    z = Zleceniodawca.objects.create(nazwa=nazwa, nip=nip, regon=regon, telefon= telefon)
+    z.save()
+    return True
 
 def trasy(request):
 
     ladunki = Ladunek.objects.all()
+    zleceniodawcy = Zleceniodawca.objects.all()
 
     if request.method == "POST" and "fladunek" in request.POST:
         dodaj_ladunek(request)
     # if request.method == "POST" and "ftrasa" in request.POST:
+    if request.method == "POST" and "fzleceniodawca" in request.POST:
+        dodaj_zleceniodawce(request)
 
-    return render(request, 'trasy.html', {'ladunki': ladunki})
+    return render(request, 'trasy.html', {'ladunki': ladunki, 'zleceniodawcy': zleceniodawcy})
 
 
 def pojazd(request):
@@ -160,12 +171,14 @@ def poczatek(request):
     return render(request, 'poczatek.html')
 
 def zleceniodawca(request):
-    if request.method == "POST":
-        telefon = request.POST['id_zleceniodawca']
-        nip = request.POST['nip']
-        regon = request.POST['regon']
+    if request.method == 'POST':
+        if "dodaj_zleceniodawce" in request.POST:
+            if dodaj_zleceniodawce(request):
+                return HttpResponse('<body onload="window.close();">')
+        elif "usun_zleceniodawce" in request.POST:
+            do_usuniecia = Zleceniodawca.objects.get(pk=request.POST['usun_zleceniodawce'])
+            do_usuniecia.delete()
 
-        z = Zleceniodawca.objects.create(nip=nip, regon=regon,
-                                    telefon=telefon)
-        z.save();
-    return render(request, 'zleceniodawca.html')
+    zleceniodawcy = Zleceniodawca.objects.all()
+
+    return render(request, 'zleceniodawca.html', {'zleceniodawcy': zleceniodawcy})

@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
 </head>
 <body>
+    {% for message in messages %}
+        <h3>{{message}}</h3>
+    {% endfor %}
+    <div class="form-outside">
+        <form action="zleceniodawca" method="POST" class="form-form">
+            {% csrf_token %}
+            <p>Zleceniodawca:</p>
+            <input type="text" placeholder="nazwa" name="nazwa"/>
+            <input type="text" placeholder="NIP" name="nip"/>
+            <input type="text" placeholder="REGON" name="regon"/>
+            <input type="text" placeholder="telefon" name="telefon"/>
+            <input type="submit" name="dodaj_zleceniodawce"/>
+        </form>
+    </div>
 
+    <!-- WYSWIETLANIE ZLECENIODAWCOW -->
+    <div class="objects-list-outside">
+        <h1 style="position: relative; left: 15px">Wszyscy zleceniodawcy:</h1>
+        <div class="objects-list-inside">
+            <div class="objects-list-item">
+                <div class="objects-list-item-content"><div class="olic-child"><b>Zleceniodawca</b></div><div class="olic-child"><b>NIP</b></div><div class="olic-child"><b>REGON</b></div><div class="olic-child"><b>telefon</b></div></div>
+            </div>
+            {% for zleceniodawca in zleceniodawcy %}
+                <div class="objects-list-item">
+                    <div class="objects-list-item-content"><div class="olic-child">{{zleceniodawca.nazwa}}</div><div class="olic-child">{{zleceniodawca.nip}}</div><div class="olic-child">{{zleceniodawca.regon}}</div><div class="olic-child">{{zleceniodawca.telefon}}</div></div>
+                    <div style="display: flex; justify-content: space-around;"><button type="button" style="width: 55px;">Edytuj</button><form action="zleceniodawca" method="post">{% csrf_token %}<button type="submit" name="usun_zleceniodawce" value={{zleceniodawca.id_zleceniodawca}} style="width: 55px;">Usuń</button></form></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
