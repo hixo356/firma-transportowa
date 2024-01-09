@@ -5,6 +5,8 @@ class Feature:
     id: int
     name: str
     details: str
+
+
 class Destynacja(models.Model):
     id_destynacja = models.AutoField(primary_key=True)
     adres = models.TextField()
