@@ -88,11 +88,28 @@ def kierowcy(request):
 
 
 def dodaj_ladunek(request):
-    masa = request.POST['masa']
-    pojazd = request.POST['pojazd']
-    stan = request.POST['stan']
-    l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
-    l.save()
+    err = [-1, 1, 1, 1]
+    if 'masa' in request.POST:
+        masa = request.POST['masa']
+        err[1] = 0
+    if 'pojazd' in request.POST:
+        pojazd = request.POST['pojazd']
+        err[2] = 0
+    if 'stan' in request.POST:
+        stan = request.POST['stan']
+        err[3] = 0
+
+    if 1 in err:
+        return err
+
+    new_l = Ladunek.objects.create(masa=masa, pojazd=pojazd, stan=stan)
+    new_l.save()
+    err[0] = new_l.pk
+    return err
+
+def usun_ladunek(request):
+    do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
+    do_usuniecia.delete()
     return True
 
 def dodaj_zleceniodawce(request):
@@ -105,17 +122,77 @@ def dodaj_zleceniodawce(request):
     return True
 
 def trasy(request):
+    print(request.POST)
 
-    ladunki = Ladunek.objects.all()
-    zleceniodawcy = Zleceniodawca.objects.all()
+    database = {'ladunki_obj': Ladunek.objects.all(),
+                'zlec_obj': Zleceniodawca.objects.all(),
+                'pocz_obj': Poczatek.objects.all(),
+                'dest_obj': Destynacja.objects.all(),
+                'kier_obj': Kierowca.objects.all()}
 
-    if request.method == "POST" and "fladunek" in request.POST:
+    # sel_objects = {'zleceniodawca': "",
+    #                'ladunek': "",
+    #                'poczatek': "",
+    #                'destynacja': "",
+    #                'kierowca': "",
+    #                'przychod': ""}
+
+    # ladunki_popup = request.POST['ladunki']
+    popup = request.POST.get('popup', 0)
+    # print(ladunki_popup)
+
+    if request.method == 'POST':
+        if "test" in request.POST:
+            return render(request, 'test.html')
+        if "dodaj_ladunek" in request.POST:
+            if request.POST['dodaj_ladunek'] == "dod":
+                dodaj_ladunek(request)
+                popup = 2
+            elif request.POST['dodaj_ladunek'] == "wyb":
+                sel_id = dodaj_ladunek(request)[0]
+                sel_ladunek = Ladunek.objects.get(pk=sel_id)
+                return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_ladunek': sel_ladunek})
+        elif "usun_ladunek" in request.POST:
+            if usun_ladunek(request):
+                print("usunieto ladunek")
+                popup = 2
+        elif "wybierz_ladunek" in request.POST:
+            sel_id = request.POST['wybierz_ladunek']
+            sel_ladunek = Ladunek.objects.get(pk=sel_id)
+            return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_ladunek': sel_ladunek})
+
+        match int(popup):
+            case 0:
+                print("POPUP OFF")
+                return render(request, 'trasy.html', {'database': database, 'popup': 0})
+            case 2:
+                print("POPUP ladunek ON")
+                return render(request, 'trasy.html', {'database': database, 'popup': 2})
+            case _:
+                return render(request, 'trasy.html', {'database': database, 'popup': 0})
+
+
+    return render(request, 'trasy.html', {'popup': 0, 'database': database,
+                                          'sel_ladunek': "",
+                                          'sel_zlec': "",
+                                          'sel_pocz': "",
+                                          'sel_dest': "",
+                                          'sel_kier': ""})
+
+def ladunek_popup(request):
+    if request.method == 'POST':
         dodaj_ladunek(request)
-    # if request.method == "POST" and "ftrasa" in request.POST:
-    if request.method == "POST" and "fzleceniodawca" in request.POST:
-        dodaj_zleceniodawce(request)
 
-    return render(request, 'trasy.html', {'ladunki': ladunki, 'zleceniodawcy': zleceniodawcy})
+def ladunek(request):
+    if request.method == 'POST':
+        if "dodaj_ladunek" in request.POST:
+            if dodaj_ladunek(request):
+                return HttpResponse('<body onload="window.close();">')
+        elif "usun_ladunek" in request.POST:
+            do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
+            do_usuniecia.delete()
+
+    return render(request, 'ladunek.html')
 
 
 def pojazd(request):
@@ -144,20 +221,6 @@ def destynacja(request):
         d.save();
 
     return render(request, 'destynacja.html')
-
-
-def ladunek(request):
-    if request.method == 'POST':
-        if "dodaj_ladunek" in request.POST:
-            if dodaj_ladunek(request):
-                return HttpResponse('<body onload="window.close();">')
-        elif "usun_ladunek" in request.POST:
-            do_usuniecia = Ladunek.objects.get(pk=request.POST['usun_ladunek'])
-            do_usuniecia.delete()
-
-    ladunki = Ladunek.objects.all()
-
-    return render(request, 'ladunek.html', {'ladunki': ladunki})
 
 def poczatek(request):
     if request.method == "POST":
