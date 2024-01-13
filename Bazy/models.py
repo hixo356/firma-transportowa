@@ -31,6 +31,8 @@ class Zleceniodawca(models.Model):
     telefon = models.CharField(max_length=12)
     nip = models.CharField(max_length=10)
     regon = models.CharField(max_length=9)
+
+
 class Poczatek(models.Model):
     id_poczatek = models.AutoField(primary_key=True)
     adres = models.TextField()
@@ -58,5 +60,5 @@ class Trasy(models.Model):
     #id_destynacja = models.ForeignKey(Destynacja, on_delete=models.SET(''))
     id_kierowca = models.ForeignKey(Kierowca, on_delete=models.SET(''))
     przychod = models.IntegerField()
-    wyjazd = models.CharField(max_length=8)
-    przyjazd = models.CharField(max_length=8)
+    data = models.CharField(max_length=10)
+

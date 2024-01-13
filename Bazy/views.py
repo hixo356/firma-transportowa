@@ -125,7 +125,7 @@ def dodaj_zleceniodawce(request):
     return True
 
 def trasy(request):
-    print(request.POST)
+    #print(request.POST)
 
     database = {'ladunki_obj': Ladunek.objects.all(),
                 'zlec_obj': Zleceniodawca.objects.all(),
@@ -133,16 +133,25 @@ def trasy(request):
                 'dest_obj': Destynacja.objects.all(),
                 'kier_obj': Kierowca.objects.all()}
 
-    # sel_objects = {'zleceniodawca': "",
-    #                'ladunek': "",
-    #                'poczatek': "",
-    #                'destynacja': "",
-    #                'kierowca': "",
-    #                'przychod': ""}
 
-    # ladunki_popup = request.POST['ladunki']
+    trasy = []
+
+    for t in Trasy.objects.all():
+        # print(t.id_zleceniodawca)
+
+        zlec = t.id_zleceniodawca  # Zleceniodawca.objects.get(pk=t.id_zleceniodawca)
+        lad = t.id_ladunek  # Ladunek.objects.get(pk=t.id_ladunek)
+        pocz = t.id_poczatek  # Poczatek.objects.get(pk=t.id_poczatek)
+        #dest = t.id_destynacja  # Destynacja.objects.get(pk=t.id_destynacja)
+        kierow = t.id_kierowca  # Kierowca.objects.get(pk=t.id_kierowca)
+        trasa = {'data': t.data, 'zlec': zlec, 'pocz': pocz, 'kierow': kierow, 'przych': t.przychod, 'lad': lad}  # 'dest': dest
+        trasy.append(trasa)
+
+    database.update({'tras_obj': trasy})
+
     popup = request.POST.get('popup', 0)
-    # print(ladunki_popup)
+
+
 
     if request.method == 'POST':
         if "test" in request.POST:
@@ -175,12 +184,8 @@ def trasy(request):
                 return render(request, 'trasy.html', {'database': database, 'popup': 0})
 
 
-    return render(request, 'trasy.html', {'popup': 0, 'database': database,
-                                          'sel_ladunek': "",
-                                          'sel_zlec': "",
-                                          'sel_pocz': "",
-                                          'sel_dest': "",
-                                          'sel_kier': ""})
+    return render(request, 'trasy.html', {'popup': 0, 'database': database, 'sel_ladunek': "", 'sel_zlec': "", 'sel_pocz': "", 'sel_dest': "", 'sel_kier': "" })
+
 
 def ladunek_popup(request):
     if request.method == 'POST':

@@ -67,5 +67,21 @@
             </div>
         </div>
     {% endif %}
+
+
+    <div class="objects-list-outside">
+        <h2 style="position: relative; left: 15px">Wszystkie Trasy:</h2>
+        <div class="objects-list-inside">
+            <div class="objects-list-item">
+                <div class="objects-list-item-content"><div class="olic-child"><b>Zleceniodawca</b></div><div class="olic-child"><b>Ładunek</b></div><div class="olic-child"><b>Poczatek</b></div><div class="olic-child"><b>Destynacja</b></div><div class="olic-child"><b>Kierowca</b></div><div class="olic-child"><b>Przychód</b></div></div>
+            </div>
+            {% for trasa in database.tras_obj %}
+                <div class="objects-list-item">
+                    <div class="objects-list-item-content"><div class="olic-child">{{trasa.zlec.nazwa}}</div><div class="olic-child">{{trasa.lad.pojazd}}</div><div class="olic-child">{{trasa.pocz.adres}}</div><div class="olic-child">{{trasa.kierow.imie}}</div></div>
+                    <div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="submit" name="wybierz_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">W</button><button type="submit" name="edytuj_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">E</button><button type="submit" name="usun_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">U</button></form></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
