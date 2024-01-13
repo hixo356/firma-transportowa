@@ -49,18 +49,19 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">Trasy</a></li>
-          <li><a class="nav-link scrollto" href="#services">Kierowcy</a></li>
-          <li><a class="nav-link scrollto o" href="#portfolio">Pojazdy</a></li>
-          <li><a class="nav-link scrollto" href="#team">jeszcze idk</a></li>
-          <li><a class="nav-link scrollto" href="#pricing">jeszcze idk</a></li>
 
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+
           {% if user.is_authenticated %}
+
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="trasy">Trasy</a></li>
+          <li><a class="nav-link scrollto" href="kierowcy">Kierowcy</a></li>
+          <li><a class="nav-link scrollto o" href="pojazd">Pojazdy</a></li>
           <li><a class="getstarted scrollto" href="logout">Wyloguj</a></li>
+
           {% else %}
           <li><a class="getstarted scrollto" href="login">Zaloguj</a></li>
+          <li><a class="getstarted scrollto" href="register">Zarejestruj</a></li>
           {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -81,7 +82,7 @@
 
 
       <div class = "row icon-boxes">
-
+        {% if user.is_authenticated %}
         {% for feature in features %}
         <div style="width: 20%" class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="500">
             <div class="icon-box">
@@ -91,6 +92,12 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+
+        <h4 class="title"><a href="login">Zaloguj</a></h4>
+        <h4 class="title"><a href="register">Zarejestruj</a></h4>
+
+        {% endif %}
 
       </div>
     </div>
