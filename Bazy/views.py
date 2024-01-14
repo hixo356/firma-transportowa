@@ -184,8 +184,12 @@ def trasy(request):
                 return render(request, 'trasy.html', {'database': database, 'popup': 0})
 
 
-    return render(request, 'trasy.html', {'popup': 0, 'database': database, 'sel_ladunek': "", 'sel_zlec': "", 'sel_pocz': "", 'sel_dest': "", 'sel_kier': "" })
-
+    return render(request, 'trasy.html', {'popup': 0, 'database': database,
+                                          'sel_ladunek': "",
+                                          'sel_zlec': "",
+                                          'sel_pocz': "",
+                                          'sel_dest': "",
+                                          'sel_kier': ""})
 
 def ladunek_popup(request):
     if request.method == 'POST':
