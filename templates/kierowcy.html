@@ -1,31 +1,75 @@
 <!DOCTYPE html>
-<html>
+{% load static %}
+<html lang="en">
 <head>
-    <style>
-        h3 {
-            color: red;
-        }
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        input[type="password"] {
-            /* Your preferred styles for password input */
-            font-family: monospace; /* optional */
-        }
-    </style>
+    <title>Rejestracja - TRANSPORT</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style-kierowcy.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 </head>
-<body>
-    {% for message in messages %}
-        <h3>{{message}}</h3>
-    {% endfor %}
+<body class="add-driver-page">
 
-    <form action="kierowcy" method="POST">
-        {% csrf_token %}
-        <p>Kierowca:</p>
-        <input type="text" placeholder="imie" name="imie"/>
-        <input type="text" placeholder="nazwisko" name="nazwisko"/>
-        <input type="text" placeholder="pesel" name="pesel"/>
-        <input type="text" placeholder="telefon" name="telefon"/><br>
-        <input type="submit"/>
+<div class="background-overlay"></div>
 
-    </form>
+<div class="container">
+    <div class="row justify-content-center align-items-center pt-4">
+        <div class="col-md-6">
+            <div class="row justify-content-center">
+                <div class="text-center logo-header">
+                    <img src="{% static 'assets/img/logo-transport.png' %}" alt="Logo Transport" class="logo-img">
+                    <h1>Transport 24h</h1>
+                    <h2>Dodaj Nowego Kierowcę</h2>
+                </div>
+            </div>
+            <div class="card">
+    <div class="card-body">
+        <!-- ... pozostały kod ... -->
+        <form action="kierowcy" method="POST" class="form-driver">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control" placeholder="Imię" name="imie" id="imie" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control" placeholder="Nazwisko" name="nazwisko" id="nazwisko" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control" placeholder="PESEL" name="pesel" id="pesel" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control" placeholder="Telefon" name="telefon" id="telefon" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Dodaj Kierowcę</button>
+        </form>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

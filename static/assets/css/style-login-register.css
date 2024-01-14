@@ -1,0 +1,78 @@
+/* Ogólne style tła strony */
+
+/* Stylizacja kontenera */
+.container {
+  z-index: 1;
+}
+
+/* Stylizacja nagłówka z logiem */
+.logo-header {
+  text-align: center;
+}
+
+.logo-header .logo-img {
+  width: 100px; /* Dostosuj szerokość logo */
+  display: inline;
+  margin-top: -40px;
+}
+
+.logo-header h1 {
+  display: inline;
+  margin: 0;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 72px;
+  color: #124265;
+  font-family: "Poppins", sans-serif;
+}
+
+.logo-header h2 {
+  color: #5e5e5e;
+  margin: 0px 0 80px 0;
+  font-size: 22px;
+}
+
+/* Stylizacja formularza */
+.form-login {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+/* Stylizacja karty formularza */
+.card {
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 1rem;
+  padding-bottom: 3rem;
+}
+
+/* Stylizacja przycisków */
+.btn-primary {
+  background-color: #2487ce;
+  border-color: #2487ce;
+}
+
+.btn-primary:hover {
+  background-color: #3194db;
+  border-color: #3194db;
+}
+
+/* Dodatkowe style dla formularza */
+.form-group label {
+  font-weight: bold;
+}
+
+.form-group input {
+  margin-bottom: 10px; /* Odstęp między polami formularza */
+}
+
+/* Stylizacja przycisku powrotu */
+.back-button {
+  padding-bottom: 20px;
+}
+
+.back-button:hover {
+  color: #0056b3;
+}
