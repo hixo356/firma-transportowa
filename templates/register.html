@@ -1,39 +1,82 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
-    <style>
-        p {
-            color: blue;
-            font-size: 24px;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Rejestracja - TRANSPORT</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style-login-register.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 </head>
-<body>
-    <h1>Sign Up Below</h1>
-    <style>
-     h5{
-        color: red;
-      }
-    </style>
+<body class="register-page">
 
-    {% for message in massages %}
-    <h5>{{message}}</h5>
-    {% endfor %}
+<div class="background-overlay"></div>
 
-    <form method="POST" action="register">
-        {% csrf_token %}
-        <p>Username: </p>
-        <input type="username" name="username"/>
-        <p>Email: </p>
-        <input type="email" name="email"/>
-        <p>Password: </p>
-        <input type="password" name="password"/>
-        <p>Repeat Password: </p>
-        <input type="password" name="repeat_password"/><br>
-        <input type="submit"/>
-    </form>
+<div class="container">
+    <div class="row justify-content-center align-items-center pt-4">
+        <div class="col-md-6">
+            <div class="row justify-content-center">
+                <div class="text-center logo-header">
+<img src="{% static 'assets/img/logo-transport.png' %}" alt="Logo Transport" class="logo-img">
+<h1>Transport 24h</h1>
+<h2>Załóż nowe konto</h2>
+</div>
+</div>
+<div class="card">
+<div class="card-body">
+<a href="/" class="back-button">
+<i class="bi bi-arrow-left"></i> Powrót
+</a>
+{% for message in messages %}
+<h3>{{ message }}</h3>
+{% endfor %}
+<form action="register" method="POST" class="form-login">
+{% csrf_token %}
+<div class="form-group">
+<label for="username">Nazwa użytkownika:</label>
+<input type="text" class="form-control" name="username" id="username" required>
+</div>
+<div class="form-group">
+<label for="email">Email:</label>
+<input type="email" class="form-control" name="email" id="email" required>
+</div>
+<div class="form-group">
+<label for="password">Hasło:</label>
+<input type="password" class="form-control" name="password" id="password" required>
+</div>
+<div class="form-group">
+<label for="repeat_password">Powtórz hasło:</label>
+<input type="password" class="form-control" name="repeat_password" id="repeat_password" required>
+</div>
+<button type="submit" class="btn btn-primary w-100 mt-3">Zarejestruj się</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bootstrap JS and its dependencies -->
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
