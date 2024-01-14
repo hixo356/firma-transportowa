@@ -116,12 +116,31 @@ def usun_ladunek(request):
     return True
 
 def dodaj_zleceniodawce(request):
-    nazwa = request.POST['nazwa']
-    nip = request.POST['nip']
-    regon = request.POST['regon']
-    telefon = request.POST['telefon']
-    z = Zleceniodawca.objects.create(nazwa=nazwa, nip=nip, regon=regon, telefon= telefon)
-    z.save()
+    err = [-1, 1, 1, 1, 1]
+    if 'nazwa' in request.POST:
+        nazwa = request.POST['nazwa']
+        err[1] = 0
+    if 'nip' in request.POST:
+        nip = request.POST['nip']
+        err[2] = 0
+    if 'regon' in request.POST:
+        regon = request.POST['regon']
+        err[3] = 0
+    if 'telefon' in request.POST:
+        telefon = request.POST['telefon']
+        err[4] = 0
+
+    if 1 in err:
+        return err
+
+    new_z = Zleceniodawca.objects.create(nazwa = nazwa, nip = nip, regon = regon, telefon = telefon)
+    new_z.save()
+    err[0] = new_z.pk
+    return err
+
+def usun_zleceniodawce(request):
+    do_usuniecia = Zleceniodawca.objects.get(pk=request.POST['usun_zleceniodawce'])
+    do_usuniecia.delete()
     return True
 
 def trasy(request):
@@ -173,6 +192,27 @@ def trasy(request):
             sel_ladunek = Ladunek.objects.get(pk=sel_id)
             return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_ladunek': sel_ladunek})
 
+
+    if request.method == 'POST':
+        if "test" in request.POST:
+             return render(request, 'test.html')
+        if "dodaj_zleceniodawce" in request.POST:
+            if request.POST['dodaj_zleceniodawce'] == "dod":
+                dodaj_zleceniodawce(request)
+                popup = 3
+            elif request.POST['dodaj_zleceniodawce'] == "wyb":
+                sel_id = dodaj_zleceniodawce(request)[0]
+                sel_zlec = Zleceniodawca.objects.get(pk=sel_id)
+                return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_zlec': sel_zlec})
+        elif "usun_zleceniodawce" in request.POST:
+            if usun_zleceniodawce(request):
+                print("usunieto zleceniodawce")
+                popup = 3
+        elif "wybierz_zleceniodawce" in request.POST:
+                sel_id = request.POST['wybierz_zleceniodawce']
+                sel_zlec = Zleceniodawca.objects.get(pk=sel_id)
+                return render(request, 'trasy.html', {'database': database, 'popup': 0, 'sel_zlec': sel_zlec})
+
         match int(popup):
             case 0:
                 print("POPUP OFF")
@@ -180,6 +220,9 @@ def trasy(request):
             case 2:
                 print("POPUP ladunek ON")
                 return render(request, 'trasy.html', {'database': database, 'popup': 2})
+            case 3:
+                print("POPUP załadunek ON")
+                return render(request, 'trasy.html', {'database': database, 'popup': 3})
             case _:
                 return render(request, 'trasy.html', {'database': database, 'popup': 0})
 

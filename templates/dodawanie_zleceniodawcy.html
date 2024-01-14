@@ -1,0 +1,30 @@
+<div class="form-outside">
+    <div class="form-inside">
+        <p class="popup-section-title">Dodaj nowego zleceniodawce:</p>
+        <form action="trasy" method="POST" class="form-form">
+             {% csrf_token %}
+             <div class="form-form-inside">
+                 <label>Nazwa:</label>
+                 <input class="form-intext" type="text" placeholder="Wpisz nazwe..." name="nazwa"/>
+             </div>
+             <div class="form-form-inside">
+                 <label>NIP:</label>
+                 <input class="form-intext" type="text" placeholder="Wpisz NIP..." name="nip"/>
+             </div>
+             <div class="form-form-inside">
+                <label>REGON:</label>
+                 <input class="form-intext" type="text" placeholder="Wpisz REGON..." name="regon"/>
+             </div>
+            <div class="form-form-inside">
+                <label>telefon:</label>
+                 <input class="form-intext" type="text" placeholder="Wpisz telefon..." name="telefon"/>
+             </div>
+             <div style="display: grid; grid-template-columns: 4fr 5fr;">
+                 <button style="height: 50%; margin-top: 15px; width: 90%;" type="submit" name="dodaj_zleceniodawce" value="dod">Dodaj</button>
+                 <div style="display: flex; flex-direction: column; justify-content: center">
+                     <button style="height: calc(50% - auto); width: 90%;" type="submit" name="dodaj_zleceniodawce" value="wyb">Dodaj<br>i wybierz</button>
+                 </div>
+             </div>
+        </form>
+    </div>
+</div>
