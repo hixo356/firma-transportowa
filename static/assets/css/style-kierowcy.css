@@ -1,47 +1,5 @@
 .add-driver-page {
-    /* Dostosuj tło i jego zachowanie */
-    background: url("../img/hero-bg.jpg") top center;
-    background-size: cover;
-}
-
-.background-overlay {
-    content: "";
-    background: rgba(255, 255, 255, 0.7);
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-}
-
-.container {
-    z-index: 1;
-}
-
-.logo-header {
-    text-align: center;
-}
-
-.logo-header .logo-img {
-    width: 100px;
-    display: inline;
-    margin-top: -40px;
-}
-
-.logo-header h1 {
-    margin: 0;
-    font-size: 56px;
-font-weight: 700;
-line-height: 72px;
-color: #124265;
-font-family: "Poppins", sans-serif;
-}
-
-.logo-header h2 {
-color: #5e5e5e;
-margin: 10px 0 30px 0;
-font-size: 22px;
+    position: relative;
 }
 
 .card {
@@ -54,9 +12,10 @@ padding: 1rem;
 padding-bottom: 3rem;
 }
 
-.form-driver {
-max-width: 400px;
-margin: auto;
+.form-driver button {
+    display: inline;
+    margin-left: 40px;
+    padding: 10px 5px !important;
 }
 
 .form-group {
@@ -106,6 +65,10 @@ color: #0056b3;
 
 .form-driver .form-group {
     padding: 5px;
+}
+
+.container {
+    max-width: 80%;
 }
 
 @media (max-width: 768px) {

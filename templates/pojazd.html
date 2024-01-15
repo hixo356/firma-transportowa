@@ -1,25 +1,127 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Rejestracja - TRANSPORT</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style-kierowcy.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 </head>
-<body>
+<body class="add-driver-page">
 
-    <form method="POST" action="pojazd">
-        {% csrf_token %}
-        <p>Marka:</p>
-        <input type="marka" name="marka"/>
-        <p>Ubezpieczenie:</p>
-        <input type="ubezpieczenie" name="ubezpieczenie"/>
-        <p>Przegląd:</p>
-        <input type="przeglad" name="przeglad"/>
-        <p>Kierowca:</p>
-        <input type="id_kierowca" name="id_kierowca"/>
-        <p>Numery rejestracyjne:</p>
-        <input type="nr_rejestracyjny" name="nr_rejestracyjny"/>
-        <input type="submit"/>
-    </form>
+<div class="background-overlay"></div>
 
+<div class="container">
+    <div class="row justify-content-center align-items-center pt-4">
+        <div class="col-md-12">
+            <div class="row justify-content-center">
+                <div class="text-center logo-header">
+                    <a href="/"><img src="{% static 'assets/img/logo-transport.png' %}" alt="Logo Transport"
+                                     class="logo-img">
+                        <h1>Transport 24h</h1></a>
+                    <h2>Dodaj Nowy Pojazd</h2>
+                </div>
+            </div>
+            <div class="card col-md-12">
+                <div class="card-body">
+                    <a href="/" class="back-button">
+                        <i class="bi bi-arrow-left"></i> Powrót
+                    </a>
+                    <form action="pojazd" method="POST" class="form-driver">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="marka">Marka:</label>
+                                <input type="text" class="form-control" name="marka" id="marka" required>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="ubezpieczenie">Ubezpieczenie:</label>
+                                <input type="date" class="form-control" name="ubezpieczenie" id="ubezpieczenie"
+                                       required>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="przeglad">Przegląd:</label>
+                                <input type="date" class="form-control" name="przeglad" id="przeglad" required>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="id_kierowca">ID Kierowcy:</label>
+                                <input type="number" class="form-control" name="id_kierowca" id="id_kierowca" required>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="nr_rejestracyjny">Numery Rejestracyjne:</label>
+                                <input type="text" class="form-control" name="nr_rejestracyjny" id="nr_rejestracyjny"
+                                       required>
+                            </div>
+                            <button type="submit" class="btn btn-primary col-md-1">Dodaj Pojazd</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Zarejestrowane Pojazdy</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Marka</th>
+                    <th>Ubezpieczenie</th>
+                    <th>Przegląd</th>
+                    <th>ID Kierowcy</th>
+                    <th>Numery Rejestracyjne</th>
+                    <th>Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pojazd in poja_obj %}
+                <tr>
+                    <td>{{ pojazd.marka }}</td>
+                    <td>{{ pojazd.ubezpieczenie }}</td>
+                    <td>{{ pojazd.przeglad }}</td>
+                    <td>{{ pojazd.id_kierowca }}</td>
+                    <td>{{ pojazd.nr_rejestracyjny }}</td>
+                    <td>
+                        <form action="usun_pojazd" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" name="usun_pojazd" value="{{pojazd.id}}">Usuń
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

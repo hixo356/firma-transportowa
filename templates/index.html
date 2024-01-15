@@ -40,7 +40,7 @@
       <div class="row justify-content-center">
        <div class="col-xl-12 text-center" >
          {% if user.is_authenticated %}
-         <h1 class="logo"><a href="index.html">Transport, {{user.username}}</a></h1>
+         <h1 class="logo">Transport, {{user.username}}</h1>
          {% endif %}
        </div>
       </div>
@@ -72,8 +72,8 @@
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
       <div class="row justify-content-center">
         <div class="col-xl-7 col-lg-9 text-center pt-3">
-          <img src="{% static 'assets/img/logo-transport.png' %}" alt="Logo Transport" class="logo-img">
-          <h1 class="logo-header">Transport 24h</h1>
+          <a href="/"><img src="{% static 'assets/img/logo-transport.png' %}" alt="Logo Transport" class="logo-img">
+          <h1 class="logo-header">Transport 24h</h1></a>
           <h2>Twoja strona do pracy</h2>
         </div>
       </div>

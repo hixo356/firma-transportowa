@@ -272,7 +272,7 @@ def pojazd(request):
         p.save()
 
 
-    return render(request, 'pojazd.html')
+    return render(request, 'pojazd.html', {'poja_obj': Pojazd.objects.all()})
 
 
 def destynacja(request):
