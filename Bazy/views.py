@@ -3,7 +3,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib import auth
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.serializers import serialize
 
 # Create your views here.
@@ -144,6 +144,16 @@ def usun_zleceniodawce(request):
     do_usuniecia.delete()
     return True
 
+def dodaj_poczatek(request):
+    new_p = Poczatek.objects.create(adres=request.POST['adres'], wspolrzedne=request.POST['wspolrzedne'], telefon=request.POST['telefon'])
+    new_p.save()
+    return HttpResponse()
+
+def dodaj_destynacje(request):
+    new_d = Destynacja.objects.create(adres=request.POST['adres'], wspolrzedne=request.POST['wspolrzedne'], telefon=request.POST['telefon'])
+    new_d.save()
+    return HttpResponse()
+
 def trasy(request):
     #print(request.POST)
 
@@ -179,6 +189,10 @@ def trasy(request):
         if 'z' in request.GET:
             sel_zlec = Zleceniodawca.objects.get(pk=request.GET.get('z'))
             response = serialize('json', [sel_zlec])
+            return JsonResponse(response[1:-1], safe=False)
+        if 'k' in request.GET:
+            sel_kier = Kierowca.objects.get(pk=request.GET.get('k'))
+            response = serialize('json', [sel_kier])
             return JsonResponse(response[1:-1], safe=False)
 
     if request.method == 'POST':

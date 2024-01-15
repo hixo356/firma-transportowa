@@ -1,0 +1,23 @@
+<div class="form-outside">
+    <div class="form-inside">
+        <p class="popup-section-title">Ustal początek:</p>
+        <form id="pocz-form" action="trasy" method="POST" class="form-form">
+             {% csrf_token %}
+             <div class="form-form-inside">
+                 <label>Adres:</label>
+                 <input id="pocz-adr" class="form-intext" type="text" placeholder="Wpisz pojazd..." name="adres"/>
+             </div>
+             <div class="form-form-inside">
+                 <label>Wspolrzedne:</label>
+                 <input id="pocz-coords" class="form-intext" type="text" placeholder="Wpisz masę..." name="wspolrzedne"/>
+             </div>
+             <div class="form-form-inside">
+                 <label>Telefon:</label>
+                 <input id="pocz-telefon" class="form-intext" type="text" placeholder="Wpisz masę..." name="telefon"/>
+             </div>
+             <div style="display: grid; grid-template-columns: 4fr 5fr;">
+                 <button style="height: 50%; margin-top: 15px; width: 90%;" type="button" id="pocz-add" name="dodaj_ladunek">Gotowe</button>
+             </div>
+        </form>
+    </div>
+</div>

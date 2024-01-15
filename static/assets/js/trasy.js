@@ -3,24 +3,14 @@
 $(function() {
   //var selected;
 
-  $('#zlec-btn').on('click', function() {
+  $('.popup-open-btn').on('click', function() {
+    var which = $(this).attr('value');
     if($(this).hasClass('selected')) {
       deselect($(this));
     } else {
       //selected = $(this);
       $(this).addClass('selected');
-      $('#zlecPopup').slideFadeToggle();
-    }
-    return false;
-  });
-
-  $('#ladunek-btn').on('click', function() {
-    if($(this).hasClass('selected')) {
-      deselect($(this));
-    } else {
-      //selected = $(this);
-      $(this).addClass('selected');
-      $('#ladunekPopup').slideFadeToggle();
+      $('#' + which + 'Popup').slideFadeToggle();
     }
     return false;
   });
@@ -45,13 +35,41 @@ $(function() {
     });
   });
 
-  $('.zlec-popup-close').on('click', function() {
-    deselect($('#zlec-btn'), $('#zlecPopup'));
-    return false;
+  $('.wybierz_kierowce').on('click', function () {
+    console.log($(this).attr("value"));
+
+    $.get('trasy', { k: $(this).attr("value") }, function(response) {
+      var obj = $.parseJSON(response);
+      $('#sel-kierowca').text(obj.fields.imie + ' ' + obj.fields.nazwisko);
+      deselect($('#kierowca-btn'), $('#kierowcaPopup'));
+    });
   });
 
-  $('.lad-popup-close').on('click', function() {
-    deselect($('#ladunek-btn'), $('#ladunekPopup'));
+  $('#pocz-add').on('click', function () {
+    //console.log($(this).attr("value"));
+    var data = $('#pocz-form').serializeArray();
+    console.log(data);
+
+    $.post('dodaj_poczatek', data, function (){
+      $('#sel-pocz').text(data[1].value);
+      deselect($('#poczatek-btn'), $('#poczatekPopup'));
+    });
+  });
+
+  $('#dest-add').on('click', function () {
+    //console.log($(this).attr("value"));
+    var data = $('#dest-form').serializeArray();
+    console.log(data);
+
+    $.post('dodaj_destynacje', data, function (){
+      $('#sel-dest').text(data[1].value);
+      deselect($('#dest-btn'), $('#destPopup'));
+    });
+  });
+
+  $('.popup-close-btn').on('click', function() {
+    var which = $(this).attr('value');
+    deselect($('#'+which+'-btn'), $('#'+which+'Popup'));
     return false;
   });
 });

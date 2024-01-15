@@ -12,5 +12,7 @@ urlpatterns = [
     path('destynacja', views.destynacja, name='destynacja'),
     path('poczatek', views.poczatek, name='poczatek'),
     path('ladunek', views.ladunek, name='ladunek'),
-    path('zleceniodawca', views.zleceniodawca, name='zleceniodawca')
+    path('zleceniodawca', views.zleceniodawca, name='zleceniodawca'),
+    path('dodaj_poczatek', views.dodaj_poczatek, name='dodaj_poczatek'),
+    path('dodaj_destynacje', views.dodaj_destynacje, name='dodaj_destynacje')
 ]

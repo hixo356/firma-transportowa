@@ -1,0 +1,14 @@
+<div class="objects-list-outside">
+    <h2 style="position: relative; left: 15px">Wszyscy kierowcy:</h2>
+    <div class="objects-list-inside">
+        <div class="objects-list-item">
+            <div class="objects-list-item-content"><div class="olic-child"><b>Pojazd</b></div><div class="olic-child"><b>Masa</b></div><div class="olic-child"><b>Stan</b></div></div>
+        </div>
+        {% for kierowca in database.kier_obj %}
+            <div class="objects-list-item">
+                <div class="objects-list-item-content"><div class="olic-child">{{kierowca.imie}}</div><div class="olic-child">{{kierowca.nazwisko}}</div><div class="olic-child">{{kierowca.pesel}}</div><div class="olic-child">{{kierowca.telefon}}</div></div>
+                <div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="button" class="wybierz_kierowce" name="wybierz_ladunek" value={{kierowca.id_kierowca}} style="width: 1.5em; height: 1.5em;">W</button><button type="submit" name="edytuj_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">E</button><button type="submit" name="usun_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">U</button></form></div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="form-outside">
+    <div class="form-inside">
+        <p class="popup-section-title">Ustal destynacje:</p>
+        <form id="dest-form" action="trasy" method="POST" class="form-form">
+             {% csrf_token %}
+             <div class="form-form-inside">
+                 <label>Adres:</label>
+                 <input id="dest-adr" class="form-intext" type="text" placeholder="Wpisz adres..." name="adres"/>
+             </div>
+             <div class="form-form-inside">
+                 <label>Wspolrzedne:</label>
+                 <input id="dest-coords" class="form-intext" type="text" placeholder="Wpisz współrzędne..." name="wspolrzedne"/>
+             </div>
+             <div class="form-form-inside">
+                 <label>Telefon:</label>
+                 <input id="dest-telefon" class="form-intext" type="text" placeholder="Wpisz telefon..." name="telefon"/>
+             </div>
+             <div style="display: grid; grid-template-columns: 4fr 5fr;">
+                 <button style="height: 50%; margin-top: 15px; width: 90%;" type="button" id="dest-add" name="dodaj_destynacje">Gotowe</button>
+             </div>
+        </form>
+    </div>
+</div>
