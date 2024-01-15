@@ -23,19 +23,16 @@
             </div>
             <div>
                 <p>Zleceniodawca:</p>
-                <textarea readonly name="zleceniodawca" class="textarea-selected-object">{% if sel_zlec %}{{sel_zlec.nazwa}} | {{sel_zlec.nip}} kg | {{sel_zlec.regon}} | {{sel_zlec.telefon}}{% else %}{% endif %}</textarea>
+                <textarea readonly id="sel-zlec" name="zleceniodawca" class="textarea-selected-object" id="selected-zlec-ta">{% if sel_zlec %}{{sel_zlec.nazwa}} | {{sel_zlec.nip}} kg | {{sel_zlec.regon}} | {{sel_zlec.telefon}}{% else %}{% endif %}</textarea>
 <!--                <form method="POST" action="trasy">-->
 <!--                    {% csrf_token %}-->
-                    <button type="submit" name="popup" value="3">Dodaj nowy/wybierz zleceniodawce</button>
+                    <button type="button" id="zlec-btn" class="zlec popup-open-btn">Dodaj nowy/wybierz zleceniodawce</button>
 <!--                </form>-->
             </div>
             <div>
                 <p>Ładunek:</p>
-                <textarea readonly name="ladunek" class="textarea-selected-object">{% if sel_ladunek %}{{sel_ladunek.pojazd}} | {{sel_ladunek.masa}} kg | {{sel_ladunek.stan_read}}{% else %}{% endif %}</textarea>
-<!--                <form method="POST" action="trasy">-->
-<!--                    {% csrf_token %}-->
-                    <button type="submit" name="popup" value="2">Dodaj nowy/wybierz ładunek</button>
-<!--                </form>-->
+                <textarea readonly id="sel-ladunek" name="ladunek" class="textarea-selected-object">{% if sel_ladunek %}{{sel_ladunek.pojazd}} | {{sel_ladunek.masa}} kg | {{sel_ladunek.stan_read}}{% else %}{% endif %}</textarea>
+                    <button type="button" id="ladunek-btn" class="ladunek popup-open-btn">Dodaj nowy/wybierz ładunek</button>
             </div>
             <div>
                 <p>Początek:</p>
@@ -59,26 +56,32 @@
         </form>
     </div>
 
-    {% if popup %}
-        <div id="myPopup" class="popup">
-            <div class="popup-content">
-                <div style="display: flex; justify-content: flex-end; position: relative; top: -10px; right: -10px;">
-                    <form method="POST" action="trasy" style="position: absolute; width: 24px; height: 24px;">
-                        {% csrf_token %}
-                        <button type="submit" name="ladunki" value="0" style="width: 100%; height: 100%; border-radius: 6px;">X</button>
-                    </form>
-                </div>
-                {% if popup == 2 %}
-                    {% include 'dodawanie_ladunku.html' %}
-                    {% include 'wyswietlanie_ladunkow.html' %}
-                {% endif %}
-                {% if popup == 3 %}
-                    {% include 'dodawanie_zleceniodawcy.html' %}
-                    {% include 'wyswietlanie_zleceniodawcow.html' %}
-                {% endif %}
+    <div id="zlecPopup" class="popup">
+        <div class="popup-content">
+            <div style="display: flex; justify-content: flex-end; position: relative; top: -10px; right: -10px;">
+<!--                <form method="POST" action="trasy" style="position: absolute; width: 24px; height: 24px;">-->
+<!--                    {% csrf_token %}-->
+                    <button type="button" class="zlec-popup-close">X</button>
+<!--                </form>-->
             </div>
+            {% include "dodawanie_zleceniodawcy.html" %}
+            {% include "wyswietlanie_zleceniodawcow.html" %}
         </div>
-    {% endif %}
+    </div>
+
+    <div id="ladunekPopup" class="popup">
+        <div class="popup-content">
+            <div style="display: flex; justify-content: flex-end; position: relative; top: -10px; right: -10px;">
+<!--                <form method="POST" action="trasy" style="position: absolute; width: 24px; height: 24px;">-->
+<!--                    {% csrf_token %}-->
+                    <button type="button" class="lad-popup-close">X</button>
+<!--                </form>-->
+            </div>
+            {% include "dodawanie_ladunku.html" %}
+            {% include "wyswietlanie_ladunkow.html" %}
+        </div>
+    </div>
+
 
 
     <div class="objects-list-outside">
@@ -95,5 +98,10 @@
             {% endfor %}
         </div>
     </div>
+
+    <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/trasy.js' %}"></script>
+
+
 </body>
 </html>

@@ -3,7 +3,8 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib import auth
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.core.serializers import serialize
 
 # Create your views here.
 def index(request):
@@ -87,7 +88,7 @@ def kierowcy(request):
         kierowca = Kierowca.objects.create(imie=imie, nazwisko=nazwisko, pesel=pesel, telefon=telefon)
         kierowca.save();
 
-    return render(request, 'kierowcy.html')
+    return render(request, 'kierowcy.html', {'kier_obj': Kierowca.objects.all()})
 
 
 def dodaj_ladunek(request):
@@ -133,7 +134,7 @@ def dodaj_zleceniodawce(request):
     if 1 in err:
         return err
 
-    new_z = Zleceniodawca.objects.create(nazwa = nazwa, nip = nip, regon = regon, telefon = telefon)
+    new_z = Zleceniodawca.objects.create(nazwa=nazwa, nip=nip, regon=regon, telefon=telefon)
     new_z.save()
     err[0] = new_z.pk
     return err
@@ -170,7 +171,15 @@ def trasy(request):
 
     popup = request.POST.get('popup', 0)
 
-
+    if request.method == 'GET':
+        if 'l' in request.GET:
+            sel_lad = Ladunek.objects.get(pk=request.GET.get('l'))
+            response = serialize('json', [sel_lad])
+            return JsonResponse(response[1:-1], safe=False)
+        if 'z' in request.GET:
+            sel_zlec = Zleceniodawca.objects.get(pk=request.GET.get('z'))
+            response = serialize('json', [sel_zlec])
+            return JsonResponse(response[1:-1], safe=False)
 
     if request.method == 'POST':
         if "test" in request.POST:

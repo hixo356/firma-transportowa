@@ -8,7 +8,7 @@
             {% for zleceniodawca in database.zlec_obj %}
                 <div class="objects-list-item">
                     <div class="objects-list-item-content"><div class="olic-child">{{zleceniodawca.nazwa}}</div><div class="olic-child">{{zleceniodawca.nip}}</div><div class="olic-child">{{zleceniodawca.regon}}</div><div class="olic-child">{{zleceniodawca.telefon}}</div></div>
-                    <div style="display: flex; justify-content: space-around;"><button type="submit" name="wybierz_zleceniodawce" value={{zleceniodawca.id_zleceniodawca}} style="width: 1.5em; height: 1.5em;">W</button><button type="button" style="width: 55px;">Edytuj</button><form action="zleceniodawca" method="post">{% csrf_token %}<button type="submit" name="usun_zleceniodawce" value={{zleceniodawca.id_zleceniodawca}} style="width: 55px;">Usuń</button></form></div>
+                    <div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="button" class="wybierz_zlec" name="wybierz_zleceniodawce" value={{zleceniodawca.id_zleceniodawca}} style="width: 1.5em; height: 1.5em;">W</button><button type="button" style="width: 55px;">Edytuj</button><button type="submit" name="usun_zleceniodawce" value={{zleceniodawca.id_zleceniodawca}} style="width: 55px;">Usuń</button></form></div>
                 </div>
             {% endfor %}
         </div>

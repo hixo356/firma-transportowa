@@ -7,7 +7,7 @@
         {% for ladunek in database.ladunki_obj %}
             <div class="objects-list-item">
                 <div class="objects-list-item-content"><div class="olic-child">{{ladunek.pojazd}}</div><div class="olic-child">{{ladunek.masa}} kg</div><div class="olic-child">{{ladunek.stan_read}}</div></div>
-                <div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="submit" name="wybierz_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">W</button><button type="submit" name="edytuj_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">E</button><button type="submit" name="usun_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">U</button></form></div>
+                <div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="button" class="wybierz_ladunek" name="wybierz_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">W</button><button type="submit" name="edytuj_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">E</button><button type="submit" name="usun_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">U</button></form></div>
             </div>
         {% endfor %}
     </div>

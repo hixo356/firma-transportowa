@@ -24,15 +24,12 @@ class Ladunek(models.Model):
 
     def stan_read(self):
         return self.get_stan_display()
-
 class Zleceniodawca(models.Model):
     id_zleceniodawca = models.AutoField(primary_key=True)
     nazwa = models.CharField(max_length=19)
     telefon = models.CharField(max_length=12)
     nip = models.CharField(max_length=10)
     regon = models.CharField(max_length=9)
-
-
 class Poczatek(models.Model):
     id_poczatek = models.AutoField(primary_key=True)
     adres = models.TextField()
