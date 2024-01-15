@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib import auth
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.serializers import serialize
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -145,13 +146,33 @@ def usun_zleceniodawce(request):
     return True
 
 def dodaj_poczatek(request):
-    new_p = Poczatek.objects.create(adres=request.POST['adres'], wspolrzedne=request.POST['wspolrzedne'], telefon=request.POST['telefon'])
+    new_p = Poczatek.objects.create(adres=request.POST['adres'], wspolrzedne=request.POST['wspolrzedne'],
+                                    telefon=request.POST['telefon'])
     new_p.save()
-    return HttpResponse()
+    new_p = new_p.pk
+    return HttpResponse(new_p)
 
 def dodaj_destynacje(request):
-    new_d = Destynacja.objects.create(adres=request.POST['adres'], wspolrzedne=request.POST['wspolrzedne'], telefon=request.POST['telefon'])
+    new_d = Destynacja.objects.create(adres=request.POST['adres'], wspolrzedne=request.POST['wspolrzedne'],
+                                      telefon=request.POST['telefon'])
     new_d.save()
+    new_d = new_d.pk
+    return HttpResponse(new_d)
+
+@csrf_exempt
+def dodaj_trase(request):
+    #print(request.POST)
+    _zleceniodawca = Zleceniodawca.objects.get(pk=request.POST['zleceniodawca'])
+    _ladunek = Ladunek.objects.get(pk=request.POST['ladunek'])
+    _poczatek = Poczatek.objects.get(pk=request.POST['poczatek'])
+    _destynacja = Destynacja.objects.get(pk=request.POST['destynacja'])
+    _kierowca = Kierowca.objects.get(pk=request.POST['kierowca'])
+
+    new_t = Trasy.objects.create(id_zleceniodawca=_zleceniodawca, id_ladunek=_ladunek,
+                                 id_poczatek=_poczatek, id_destynacja=_destynacja,
+                                 id_kierowca=_kierowca, przychod=request.POST['przychod'],
+                                 data=request.POST['data'])
+    new_t.save()
     return HttpResponse()
 
 def trasy(request):

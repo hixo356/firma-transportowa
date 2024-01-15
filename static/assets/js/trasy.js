@@ -20,7 +20,8 @@ $(function() {
 
     $.get('trasy', { z: $(this).attr("value") }, function(response) {
       var obj = JSON.parse(response);
-      $('#sel-zlec').text(obj.fields.nazwa + '|' + obj.fields.telefon + '|' + obj.fields.nip + '|' + obj.fields.regon);
+      $('#sel-zlec-show').text(obj.fields.nazwa + '|' + obj.fields.telefon + '|' + obj.fields.nip + '|' + obj.fields.regon);
+      $('#sel-zlec').text(obj.pk);
       deselect($('#zlec-btn'), $('#zlecPopup'));
     });
   });
@@ -30,7 +31,8 @@ $(function() {
 
     $.get('trasy', { l: $(this).attr("value") }, function(response) {
       var obj = $.parseJSON(response);
-      $('#sel-ladunek').text(obj.fields.pojazd + '|' + obj.fields.masa + '|' + obj.fields.stan);
+      $('#sel-ladunek-show').text(obj.fields.pojazd + '|' + obj.fields.masa + '|' + obj.fields.stan);
+      $('#sel-ladunek').text(obj.pk);
       deselect($('#ladunek-btn'), $('#ladunekPopup'));
     });
   });
@@ -40,7 +42,8 @@ $(function() {
 
     $.get('trasy', { k: $(this).attr("value") }, function(response) {
       var obj = $.parseJSON(response);
-      $('#sel-kierowca').text(obj.fields.imie + ' ' + obj.fields.nazwisko);
+      $('#sel-kierowca-show').text(obj.fields.imie + ' ' + obj.fields.nazwisko);
+      $('#sel-kierowca').text(obj.pk);
       deselect($('#kierowca-btn'), $('#kierowcaPopup'));
     });
   });
@@ -50,8 +53,9 @@ $(function() {
     var data = $('#pocz-form').serializeArray();
     console.log(data);
 
-    $.post('dodaj_poczatek', data, function (){
-      $('#sel-pocz').text(data[1].value);
+    $.post('dodaj_poczatek', data, function (response){
+      $('#sel-pocz-show').text(data[1].value);
+      $('#sel-pocz').text(response)
       deselect($('#poczatek-btn'), $('#poczatekPopup'));
     });
   });
@@ -61,9 +65,23 @@ $(function() {
     var data = $('#dest-form').serializeArray();
     console.log(data);
 
-    $.post('dodaj_destynacje', data, function (){
-      $('#sel-dest').text(data[1].value);
+    $.post('dodaj_destynacje', data, function (response){
+      $('#sel-dest-show').text(data[1].value);
+      $('#sel-dest').text(response);
       deselect($('#dest-btn'), $('#destPopup'));
+    });
+  });
+
+  $('#trasa-add-btn').on('click', function(){
+    var data = $('#trasa-form').serializeArray();
+    console.log(data);
+    var request = [];
+    //   [data[1].name] : data[1].value
+    // };
+    //data.forEach((value) => request.push({[value[0].value] : value[1].value}));
+    console.log(request);
+    $.post('dodaj_trase', data, function() {
+      console.log("success");
     });
   });
 

@@ -54,7 +54,7 @@ class Trasy(models.Model):
     id_zleceniodawca = models.ForeignKey(Zleceniodawca, on_delete=models.SET(''))
     id_ladunek = models.ForeignKey(Ladunek, on_delete=models.SET(''))
     id_poczatek = models.ForeignKey(Poczatek, on_delete=models.SET(''))
-    #id_destynacja = models.ForeignKey(Destynacja, on_delete=models.SET(''))
+    id_destynacja = models.ForeignKey(Destynacja, on_delete=models.SET(''))
     id_kierowca = models.ForeignKey(Kierowca, on_delete=models.SET(''))
     przychod = models.IntegerField()
     data = models.CharField(max_length=10)
