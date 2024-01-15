@@ -14,7 +14,8 @@
     <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
@@ -35,40 +36,90 @@
 
 <div class="container">
     <div class="row justify-content-center align-items-center pt-4">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="row justify-content-center">
                 <div class="text-center logo-header">
-                    <img src="{% static 'assets/img/logo-transport.png' %}" alt="Logo Transport" class="logo-img">
-                    <h1>Transport 24h</h1>
+                    <a href="/"><img src="{% static 'assets/img/logo-transport.png' %}" alt="Logo Transport" class="logo-img">
+                    <h1>Transport 24h</h1></a>
                     <h2>Dodaj Nowego Kierowcę</h2>
                 </div>
             </div>
-            <div class="card">
-    <div class="card-body">
-        <!-- ... pozostały kod ... -->
-        <form action="kierowcy" method="POST" class="form-driver">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <input type="text" class="form-control" placeholder="Imię" name="imie" id="imie" required>
+            <div class="card col-md-12">
+                <div class="card-body">
+                    <a href="/" class="back-button">
+                        <i class="bi bi-arrow-left"></i> Powrót
+                    </a>
+                    <form action="kierowcy" method="POST" class="form-driver">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="imie">Imię:</label>
+                                <input type="text" class="form-control" placeholder="Imię" name="imie" id="imie"
+                                       required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="nazwisko">Nazwisko:</label>
+                                <input type="text" class="form-control" placeholder="Nazwisko" name="nazwisko"
+                                       id="nazwisko" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="pesel">PESEL:</label>
+                                <input type="text" class="form-control" placeholder="PESEL" name="pesel" id="pesel"
+                                       required>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="telefon">Telefon:</label>
+                                <input type="text" class="form-control" placeholder="Telefon" name="telefon"
+                                       id="telefon" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary col-md-1">Dodaj Kierowcę</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group col-md-3">
-                    <input type="text" class="form-control" placeholder="Nazwisko" name="nazwisko" id="nazwisko" required>
-                </div>
-                <div class="form-group col-md-3">
-                    <input type="text" class="form-control" placeholder="PESEL" name="pesel" id="pesel" required>
-                </div>
-                <div class="form-group col-md-3">
-                    <input type="text" class="form-control" placeholder="Telefon" name="telefon" id="telefon" required>
-                </div>
+
+
             </div>
-            <button type="submit" class="btn btn-primary mt-2">Dodaj Kierowcę</button>
-        </form>
-    </div>
-</div>
+
         </div>
     </div>
 </div>
+
+<!-- Kontener na listę kierowców -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Zarejestrowani Kierowcy</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
+                        <th>PESEL</th>
+                        <th>Telefon</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for kierowca in kier_obj %}
+                    <tr>
+                        <td>{{ kierowca.imie }}</td>
+                        <td>{{ kierowca.nazwisko }}</td>
+                        <td>{{ kierowca.pesel }}</td>
+                        <td>{{ kierowca.telefon }}</td>
+                        <td>
+                            <form action="kierowcy" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" name="usun_kierowce" value="{{kierowca.id_kierowca}}">Zwolnij</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 
 <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>

@@ -5,33 +5,6 @@
   z-index: 1;
 }
 
-/* Stylizacja nagłówka z logiem */
-.logo-header {
-  text-align: center;
-}
-
-.logo-header .logo-img {
-  width: 100px; /* Dostosuj szerokość logo */
-  display: inline;
-  margin-top: -40px;
-}
-
-.logo-header h1 {
-  display: inline;
-  margin: 0;
-  font-size: 56px;
-  font-weight: 700;
-  line-height: 72px;
-  color: #124265;
-  font-family: "Poppins", sans-serif;
-}
-
-.logo-header h2 {
-  color: #5e5e5e;
-  margin: 0px 0 80px 0;
-  font-size: 22px;
-}
-
 /* Stylizacja formularza */
 .form-login {
   max-width: 400px;

@@ -87,7 +87,7 @@ def kierowcy(request):
         kierowca = Kierowca.objects.create(imie=imie, nazwisko=nazwisko, pesel=pesel, telefon=telefon)
         kierowca.save();
 
-    return render(request, 'kierowcy.html')
+    return render(request, 'kierowcy.html', {'kier_obj': Kierowca.objects.all()})
 
 
 def dodaj_ladunek(request):
@@ -211,7 +211,7 @@ def pojazd(request):
         p.save()
 
 
-    return render(request, 'pojazd.html')
+    return render(request, 'pojazd.html', {'poja_obj': Pojazd.objects.all()})
 
 
 def destynacja(request):
