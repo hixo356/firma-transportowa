@@ -7,13 +7,6 @@
     <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
 </head>
 <body>
-    {% block test %}
-
-    {% endblock %}
-    <form action="trasy" method="POST">
-        {% csrf_token %}
-        <button type="submit" name="test">TEST</button>
-    </form>
     <div class="trasy-form-outside">
         <form id="trasa-form" method="POST" action="trasy" class="trasy-form-form">
             {% csrf_token %}
