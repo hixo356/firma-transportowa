@@ -3,8 +3,9 @@
 $(function() {
   //var selected;
 
-  $('.popup-open-btn').on('click', function() {
+  $(document).on('click', '.popup-open-btn', function() {
     let which = $(this).attr('value');
+    console.log(which);
     if($(this).hasClass('selected')) {
       deselect($(this));
     } else {
@@ -15,36 +16,36 @@ $(function() {
     return false;
   });
 
-  $('.wybierz_zlec').on('click', function () {
+  $(document).on('click', '.wybierz_zlec',function () {
     console.log($(this).attr("value"));
 
     $.get('trasy', { z: $(this).attr("value") }, function(response) {
       let obj = JSON.parse(response);
-      $('#sel-zlec-show').text(obj.fields.nazwa + '|' + obj.fields.telefon + '|' + obj.fields.nip + '|' + obj.fields.regon);
-      $('#sel-zlec').text(obj.pk);
-      deselect($('#zlec-btn'), $('#zlecPopup'));
+      $('.sel-zlec-show').text(obj.fields.nazwa + '|' + obj.fields.telefon + '|' + obj.fields.nip + '|' + obj.fields.regon);
+      $('.sel-zlec').text(obj.pk);
+      deselect($('.zlec-btn'), $('#zlecPopup'));
     });
   });
 
-  $('.wybierz_ladunek').on('click', function () {
+  $(document).on('click', '.wybierz_ladunek',function () {
     console.log($(this).attr("value"));
 
     $.get('trasy', { l: $(this).attr("value") }, function(response) {
       let obj = $.parseJSON(response);
-      $('#sel-ladunek-show').text(obj.fields.pojazd + '|' + obj.fields.masa + '|' + obj.fields.stan);
-      $('#sel-ladunek').text(obj.pk);
-      deselect($('#ladunek-btn'), $('#ladunekPopup'));
+      $('.sel-ladunek-show').text(obj.fields.pojazd + '|' + obj.fields.masa + '|' + obj.fields.stan);
+      $('.sel-ladunek').text(obj.pk);
+      deselect($('.ladunek-btn'), $('#ladunekPopup'));
     });
   });
 
-  $('.wybierz_kierowce').on('click', function () {
+  $(document).on('click', '.wybierz_kierowce', function () {
     console.log($(this).attr("value"));
 
     $.get('trasy', { k: $(this).attr("value") }, function(response) {
       let obj = $.parseJSON(response);
-      $('#sel-kierowca-show').text(obj.fields.imie + ' ' + obj.fields.nazwisko);
-      $('#sel-kierowca').text(obj.pk);
-      deselect($('#kierowca-btn'), $('#kierowcaPopup'));
+      $('.sel-kierowca-show').text(obj.fields.imie + ' ' + obj.fields.nazwisko);
+      $('.sel-kierowca').text(obj.pk);
+      deselect($('.kierowca-btn'), $('#kierowcaPopup'));
     });
   });
 
@@ -56,9 +57,9 @@ $(function() {
     console.log(data);
 
     $.post('dodaj_poczatek', data, function (response){
-      $('#sel-pocz-show').text(data[1].value);
-      $('#sel-pocz').text(response)
-      deselect($('#poczatek-btn'), $('#poczatekPopup'));
+      $('.sel-pocz-show').text(data[1].value);
+      $('.sel-pocz').text(response)
+      deselect($('.poczatek-btn'), $('#poczatekPopup'));
     });
   });
 
@@ -68,12 +69,13 @@ $(function() {
     console.log(data);
 
     $.post('dodaj_destynacje', data, function (response){
-      $('#sel-dest-show').text(data[1].value);
-      $('#sel-dest').text(response);
-      deselect($('#dest-btn'), $('#destPopup'));
+      $('.sel-dest-show').text(data[1].value);
+      $('.sel-dest').text(response);
+      deselect($('.dest-btn'), $('#destPopup'));
     });
   });
 
+  //DODANIE TRASY
   $('#trasa-add-btn').on('click', function(){
     let data = $('#trasa-form').serializeArray();
     console.log(data);
@@ -85,25 +87,27 @@ $(function() {
     $.post('dodaj_trase', data, function(response) {
       console.log(response)
       $('#trasy').find('.objects-list-inside').append('<div class="trasa-item objects-list-item">\n' +
-          '                <div class="objects-list-item-content"><div class="olic-child">'+response.data+'</div><div class="olic-child">'+response.zleceniodawca+'</div><div class="olic-child">'+response.ladunek+'</div><div class="olic-child">'+response.poczatek+'</div><div class="olic-child">'+response.destynacja+'</div><div class="olic-child">'+response.kierowca+'</div></div>\n' +
-          '                <div><button type="button" class="usun_trase" name="usun_trase" value='+response.pk+' style="width: 1.5em; height: 1.5em;">U</button></div>\n' +
+          '                <div class="objects-list-item-content"><div class="olic-child">' + response.data + '</div><div class="olic-child">' + response.zleceniodawca + '</div><div class="olic-child">' + response.ladunek + '</div><div class="olic-child">' + response.poczatek + '</div><div class="olic-child">' + response.destynacja + '</div><div class="olic-child">' + response.kierowca + '</div><div class="olic-child">' + response.przychod + '</div></div>\n' +
+          '                <div><button type="button" class="usun_trase" name="usun_trase" value=' + response.pk + ' style="width: 1.5em; height: 1.5em;">U</button></div>\n' + //<button type="button" class="edytuj_trase" name="edytuj_trase" value='+response.pk+' style="width: 1.5em; height: 1.5em;">E</button>
           '            </div>');
       console.log("success");
     });
   });
 
+  //RENDEROWANIE TRAS
   let trasyContainer = $('#trasy').find('.objects-list-inside')
   $.getJSON('trasy_all', function(response){
     console.log(response);
     //var obj = $.parseJSON(response);
     $.each(response, function (index, trasa) {
       trasyContainer.append('<div class="trasa-item objects-list-item">\n' +
-        '                <div class="objects-list-item-content"><div class="olic-child">'+trasa.data+'</div><div class="olic-child">'+trasa.zleceniodawca+'</div><div class="olic-child">'+trasa.ladunek+'</div><div class="olic-child">'+trasa.poczatek+'</div><div class="olic-child">'+trasa.destynacja+'</div><div class="olic-child">'+trasa.kierowca+'</div></div>\n' +
-        '                <div><button type="button" class="usun_trase" name="usun_trase" value='+trasa.pk+' style="width: 1.5em; height: 1.5em;">U</button></div>\n' +
-        '            </div>');
+          '                <div class="objects-list-item-content"><div class="olic-child">' + trasa.data + '</div><div class="olic-child">' + trasa.zleceniodawca + '</div><div class="olic-child">' + trasa.ladunek + '</div><div class="olic-child">' + trasa.poczatek + '</div><div class="olic-child">' + trasa.destynacja + '</div><div class="olic-child">' + trasa.kierowca + '</div><div class="olic-child">' + trasa.przychod + '</div></div>\n' +
+          '                <div><button type="button" class="usun_trase" name="usun_trase" value=' + trasa.pk + ' style="width: 1.5em; height: 1.5em;">U</button></div>\n' + //<button type="button" class="edytuj_trase" name="edytuj_trase" value='+trasa.pk+' style="width: 1.5em; height: 1.5em;">E</button>
+          '            </div>');
     });
   });
 
+  //USUWANIE TRASY
   $(document).on('click', '.usun_trase', function () {
     let btn = $(this);
     $.get('usun_trase', { t: btn.attr("value") }, function() {
@@ -113,26 +117,64 @@ $(function() {
     });
   });
 
+  //EDYCJA TRASY
   $(document).on('click', '.edytuj_trase', function() {
     let btn = $(this);
-    $.get('get_trasa', { t: btn.attr("value") }, function(reponse){
-      btn.closest('.trasa-item').updateWith('<div class="trasa-item objects-list-item">' +
-            '<form class="edycja-trasy objects-list-item-content"><input type="text" value='+response.data+' name="data"/><input type="text" value='+response.zleceniodawca+' name="data"/><input type="text" value='+response.ladunek+' name="data"/><input type="text" value='+response.poczatek+' name="data"/><input type="text" value='+response.destynacja+' name="data"/><input type="text" value='+response.przychod+' name="data"/></form>' +
-            '<div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="button" class="potwierdz_trase" name="potwierdz_trase" value='+response.pk+' style="width: 1.5em; height: 1.5em;">P</button></form></div>' +
+    $.get('get_trasa', { t: btn.attr("value") }, function(response){
+      btn.closest('.trasa-item').replaceWith('<div class="trasa-item objects-list-item">' +
+            '<form class="edycja-trasy objects-list-item-content">' +
+                '<div>' +
+                    '<input type="text" value='+response.data+' name="data"/>' +
+                '</div>' +
+                '<div>' +
+                    '<p class="sel-zlec-show">'+response.zleceniodawca+'</p>' +
+                    '<textarea style="display: none;" name="zleceniodawca" class="sel-zlec textarea-selected-object"></textarea>' +
+                    '<button type="button" class="zlec-btn zlec popup-open-btn" value="zlec">W</button>' +
+                '</div>' +
+                '<div>' +
+                    '<p class="sel-ladunek-show" >'+response.ladunek+'</p>' +
+                    '<textarea style="display: none;" name="ladunek" class="sel-ladunek textarea-selected-object"></textarea>' +
+                    '<button type="button" class="ladunek-btn ladunek popup-open-btn" value="ladunek">W</button>' +
+                '</div>' +
+                '<div>' +
+                    '<p class="sel-pocz-show" >'+response.poczatek+'</p>' +
+                    '<textarea style="display: none;" name="poczatek" class="sel-pocz textarea-selected-object"></textarea>' +
+                    '<button type="button" class="poczatek-btn poczatek popup-open-btn" value="poczatek">W</button>' +
+                '</div>' +
+                '<div>' +
+                    '<p class="sel-dest-show" >'+response.destynacja+'</p>' +
+                    '<textarea style="display: none;" name="destynacja" class="sel-dest textarea-selected-object"></textarea>' +
+                    '<button type="button" class="dest-btn destynacja popup-open-btn" value="dest">W</button>' +
+                '</div>' +
+                '<div>' +
+                    '<p class="sel-kierowca-show" >'+response.kierowca+'</p>' +
+                    '<textarea style="display: none;" name="kierowca" class="sel-kierowca textarea-selected-object"></textarea>' +
+                    '<button type="button" class="kierowca-btn kierowca popup-open-btn" value="kierowca">W</button>' +
+                '</div>' +
+                '<div>' +
+                    '<input type="text" value='+response.przychod+' name="przychod"/>' +
+                '</div>' +
+            '</form>' +
+            '<div><button type="button" class="potwierdz_trase" name="potwierdz_trase" value='+response.pk+' style="width: 1.5em; height: 1.5em;">P</button></div>' +
         '</div>');
     });
 
-    let edited = btn.closest('.edycja-trasy').serializeArray();
-    console.log(`edited; ${data}`);
 
-    $.post('edytuj_trase', { t: btn.attr("value"), data: data }, function(response){
+  });
 
+  $(document).on('click', '.potwierdz_trase', function() {
+    let btn = $(this);
+    let edited = btn.parent().parent().find('.edycja-trasy').serializeArray();
+    console.log(edited); //$(document).find('.edycja-trasy')
+
+    $.post('edytuj_trase', { t: $(this).attr("value"), data: edited }, function(response){
+      console.log("edycja?");
     });
   });
 
   $('.popup-close-btn').on('click', function() {
     let which = $(this).attr('value');
-    deselect($('#'+which+'-btn'), $('#'+which+'Popup'));
+    deselect($('.'+which+'-btn'), $('#'+which+'Popup'));
     return false;
   });
 });

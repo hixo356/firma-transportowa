@@ -178,12 +178,14 @@ def dodaj_trase(request):
              "ladunek": new_t.id_ladunek.pojazd, "destynacja": new_t.id_destynacja.adres}
     return JsonResponse(trasa, safe=False)
 
+@csrf_exempt
 def usun_trase(request):
     print(request.GET.get('t'))
     do_usuniecia = Trasy.objects.get(pk=request.GET.get('t'))
     do_usuniecia.delete()
     return HttpResponse()
 
+@csrf_exempt
 def trasy_all(request):
     print(request.GET)
     trasy_obj = []
@@ -204,6 +206,7 @@ def trasy_all(request):
     print(trasy_obj)
     return JsonResponse(trasy_obj, safe=False)
 
+@csrf_exempt
 def get_trasa(request):
     t = Trasy.objects.get(pk=request.GET.get('t'))
     trasa = {"pk": t.pk, "data": t.data, "zleceniodawca": t.id_zleceniodawca.nazwa,
@@ -212,7 +215,9 @@ def get_trasa(request):
              "ladunek": t.id_ladunek.pojazd, "destynacja": t.id_destynacja.adres}
     return JsonResponse(trasa, safe=False)
 
+@csrf_exempt
 def edytuj_trase(request):
+    print(request.POST)
     _zleceniodawca = Zleceniodawca.objects.get(pk=request.POST['zleceniodawca'])
     _ladunek = Ladunek.objects.get(pk=request.POST['ladunek'])
     _poczatek = Poczatek.objects.get(pk=request.POST['poczatek'])
