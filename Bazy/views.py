@@ -204,6 +204,22 @@ def trasy_all(request):
     print(trasy_obj)
     return JsonResponse(trasy_obj, safe=False)
 
+def get_trasa(request):
+    t = Trasy.objects.get(pk=request.GET.get('t'))
+    trasa = {"pk": t.pk, "data": t.data, "zleceniodawca": t.id_zleceniodawca.nazwa,
+             "poczatek": t.id_poczatek.adres, "kierowca": t.id_kierowca.imie,
+             "przychod": t.przychod,
+             "ladunek": t.id_ladunek.pojazd, "destynacja": t.id_destynacja.adres}
+    return JsonResponse(trasa, safe=False)
+
+def edytuj_trase(request):
+    _zleceniodawca = Zleceniodawca.objects.get(pk=request.POST['zleceniodawca'])
+    _ladunek = Ladunek.objects.get(pk=request.POST['ladunek'])
+    _poczatek = Poczatek.objects.get(pk=request.POST['poczatek'])
+    _destynacja = Destynacja.objects.get(pk=request.POST['destynacja'])
+    _kierowca = Kierowca.objects.get(pk=request.POST['kierowca'])
+    t = Trasy.objects.get(pk=request.POST['id']).update()
+
 def trasy(request):
     #print(request.POST)
 

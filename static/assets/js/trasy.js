@@ -113,6 +113,23 @@ $(function() {
     });
   });
 
+  $(document).on('click', '.edytuj_trase', function() {
+    let btn = $(this);
+    $.get('get_trasa', { t: btn.attr("value") }, function(reponse){
+      btn.closest('.trasa-item').updateWith('<div class="trasa-item objects-list-item">' +
+            '<form class="edycja-trasy objects-list-item-content"><input type="text" value='+response.data+' name="data"/><input type="text" value='+response.zleceniodawca+' name="data"/><input type="text" value='+response.ladunek+' name="data"/><input type="text" value='+response.poczatek+' name="data"/><input type="text" value='+response.destynacja+' name="data"/><input type="text" value='+response.przychod+' name="data"/></form>' +
+            '<div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="button" class="potwierdz_trase" name="potwierdz_trase" value='+response.pk+' style="width: 1.5em; height: 1.5em;">P</button></form></div>' +
+        '</div>');
+    });
+
+    let edited = btn.closest('.edycja-trasy').serializeArray();
+    console.log(`edited; ${data}`);
+
+    $.post('edytuj_trase', { t: btn.attr("value"), data: data }, function(response){
+
+    });
+  });
+
   $('.popup-close-btn').on('click', function() {
     let which = $(this).attr('value');
     deselect($('#'+which+'-btn'), $('#'+which+'Popup'));

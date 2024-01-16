@@ -10,5 +10,7 @@
                 <div><form action="trasy" method="post" style="display: flex; justify-content: space-around;">{% csrf_token %}<button type="submit" name="edytuj_ladunek" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">E</button><button type="button" class="usun_trase" name="usun_trase" value={{ladunek.id_ladunek}} style="width: 1.5em; height: 1.5em;">U</button></form></div>
             </div>
         {% endfor %}
+
+
     </div>
 </div>

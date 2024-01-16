@@ -17,5 +17,7 @@ urlpatterns = [
     path('dodaj_destynacje', views.dodaj_destynacje, name='dodaj_destynacje'),
     path('dodaj_trase', views.dodaj_trase, name='dodaj_trase'),
     path('usun_trase', views.usun_trase, name='usun_trase'),
-    path('trasy_all', views.trasy_all, name='trasy_all')
+    path('trasy_all', views.trasy_all, name='trasy_all'),
+    path('get_trasa', views.get_trasa, name='get_trasa'),
+    path('edytuj_trase', views.edytuj_trase, name='edytuj_trase')
 ]
