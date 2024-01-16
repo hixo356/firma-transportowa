@@ -29,25 +29,25 @@
             </div>
             <div>
                 <p>Ładunek:</p>
-                <p id="sel-ladunek-show" ></p>
+                <p id="sel-ladunek-show" ><br></p>
                 <textarea style="display: none;" id="sel-ladunek" name="ladunek" class="textarea-selected-object"></textarea>
                 <button type="button" id="ladunek-btn" class="ladunek popup-open-btn" value="ladunek">Dodaj nowy/wybierz ładunek</button>
             </div>
             <div>
                 <p>Początek:</p>
-                <p id="sel-pocz-show" ></p>
+                <p id="sel-pocz-show" ><br></p>
                 <textarea style="display: none;" id="sel-pocz" name="poczatek" class="textarea-selected-object"></textarea>
                 <button type="button" id="poczatek-btn" class="poczatek popup-open-btn" value="poczatek">Ustal początek</button>
             </div>
             <div>
                 <p>Destynacja:</p>
-                <p id="sel-dest-show" ></p>
+                <p id="sel-dest-show" ><br></p>
                 <textarea style="display: none;" id="sel-dest" name="destynacja" class="textarea-selected-object"></textarea>
                 <button type="button" id="dest-btn" class="destynacja popup-open-btn" value="dest">Ustal początek</button>
             </div>
             <div>
                 <p>Kierowca:</p>
-                <p id="sel-kierowca-show" ></p>
+                <p id="sel-kierowca-show" ><br></p>
                 <textarea style="display: none;" id="sel-kierowca" name="kierowca" class="textarea-selected-object"></textarea>
                 <button type="button" id="kierowca-btn" class="kierowca popup-open-btn" value="kierowca">Wybierz Kierowcę</button>
             </div>
@@ -128,7 +128,16 @@
         </div>
     </div>
 
-    {% include "wyswietlanie_tras.html" %}
+    <div id="trasy">
+        <div class="objects-list-outside">
+            <h2 style="position: relative; left: 15px">Wszystkie Trasy:</h2>
+            <div class="objects-list-inside">
+                <div class="objects-list-item">
+                    <div class="objects-list-item-content"><div class="olic-child"><b>Data</b></div><div class="olic-child"><b>Zleceniodawca</b></div><div class="olic-child"><b>Ładunek</b></div><div class="olic-child"><b>Poczatek</b></div><div class="olic-child"><b>Destynacja</b></div><div class="olic-child"><b>Kierowca</b></div><div class="olic-child"><b>Przychód</b></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'assets/js/trasy.js' %}"></script>

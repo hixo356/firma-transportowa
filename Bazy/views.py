@@ -173,7 +173,36 @@ def dodaj_trase(request):
                                  id_kierowca=_kierowca, przychod=request.POST['przychod'],
                                  data=request.POST['data'])
     new_t.save()
+    trasa = {"pk": new_t.pk, "data": new_t.data, "zleceniodawca": new_t.id_zleceniodawca.nazwa, "poczatek": new_t.id_poczatek.adres, "kierowca": new_t.id_kierowca.imie,
+             "przychod": new_t.przychod,
+             "ladunek": new_t.id_ladunek.pojazd, "destynacja": new_t.id_destynacja.adres}
+    return JsonResponse(trasa, safe=False)
+
+def usun_trase(request):
+    print(request.GET.get('t'))
+    do_usuniecia = Trasy.objects.get(pk=request.GET.get('t'))
+    do_usuniecia.delete()
     return HttpResponse()
+
+def trasy_all(request):
+    print(request.GET)
+    trasy_obj = []
+
+    for t in Trasy.objects.all():
+        # print(t.id_zleceniodawca)
+
+        zlec = t.id_zleceniodawca  # Zleceniodawca.objects.get(pk=t.id_zleceniodawca)
+        lad = t.id_ladunek  # Ladunek.objects.get(pk=t.id_ladunek)
+        pocz = t.id_poczatek  # Poczatek.objects.get(pk=t.id_poczatek)
+        dest = t.id_destynacja  # Destynacja.objects.get(pk=t.id_destynacja)
+        kierow = t.id_kierowca  # Kierowca.objects.get(pk=t.id_kierowca)
+
+        trasa = {"pk": t.pk, "data": t.data, "zleceniodawca": zlec.nazwa, "poczatek": pocz.adres, "kierowca": kierow.imie, "przychod": t.przychod,
+                 "ladunek": lad.pojazd, "destynacja": dest.adres}
+        trasy_obj.append(trasa)
+
+    print(trasy_obj)
+    return JsonResponse(trasy_obj, safe=False)
 
 def trasy(request):
     #print(request.POST)

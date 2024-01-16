@@ -4,7 +4,7 @@ $(function() {
   //var selected;
 
   $('.popup-open-btn').on('click', function() {
-    var which = $(this).attr('value');
+    let which = $(this).attr('value');
     if($(this).hasClass('selected')) {
       deselect($(this));
     } else {
@@ -19,7 +19,7 @@ $(function() {
     console.log($(this).attr("value"));
 
     $.get('trasy', { z: $(this).attr("value") }, function(response) {
-      var obj = JSON.parse(response);
+      let obj = JSON.parse(response);
       $('#sel-zlec-show').text(obj.fields.nazwa + '|' + obj.fields.telefon + '|' + obj.fields.nip + '|' + obj.fields.regon);
       $('#sel-zlec').text(obj.pk);
       deselect($('#zlec-btn'), $('#zlecPopup'));
@@ -30,7 +30,7 @@ $(function() {
     console.log($(this).attr("value"));
 
     $.get('trasy', { l: $(this).attr("value") }, function(response) {
-      var obj = $.parseJSON(response);
+      let obj = $.parseJSON(response);
       $('#sel-ladunek-show').text(obj.fields.pojazd + '|' + obj.fields.masa + '|' + obj.fields.stan);
       $('#sel-ladunek').text(obj.pk);
       deselect($('#ladunek-btn'), $('#ladunekPopup'));
@@ -41,16 +41,18 @@ $(function() {
     console.log($(this).attr("value"));
 
     $.get('trasy', { k: $(this).attr("value") }, function(response) {
-      var obj = $.parseJSON(response);
+      let obj = $.parseJSON(response);
       $('#sel-kierowca-show').text(obj.fields.imie + ' ' + obj.fields.nazwisko);
       $('#sel-kierowca').text(obj.pk);
       deselect($('#kierowca-btn'), $('#kierowcaPopup'));
     });
   });
 
+
+
   $('#pocz-add').on('click', function () {
     //console.log($(this).attr("value"));
-    var data = $('#pocz-form').serializeArray();
+    let data = $('#pocz-form').serializeArray();
     console.log(data);
 
     $.post('dodaj_poczatek', data, function (response){
@@ -62,7 +64,7 @@ $(function() {
 
   $('#dest-add').on('click', function () {
     //console.log($(this).attr("value"));
-    var data = $('#dest-form').serializeArray();
+    let data = $('#dest-form').serializeArray();
     console.log(data);
 
     $.post('dodaj_destynacje', data, function (response){
@@ -73,20 +75,46 @@ $(function() {
   });
 
   $('#trasa-add-btn').on('click', function(){
-    var data = $('#trasa-form').serializeArray();
+    let data = $('#trasa-form').serializeArray();
     console.log(data);
-    var request = [];
+    let request = [];
     //   [data[1].name] : data[1].value
     // };
     //data.forEach((value) => request.push({[value[0].value] : value[1].value}));
     console.log(request);
-    $.post('dodaj_trase', data, function() {
+    $.post('dodaj_trase', data, function(response) {
+      console.log(response)
+      $('#trasy').find('.objects-list-inside').append('<div class="trasa-item objects-list-item">\n' +
+          '                <div class="objects-list-item-content"><div class="olic-child">'+response.data+'</div><div class="olic-child">'+response.zleceniodawca+'</div><div class="olic-child">'+response.ladunek+'</div><div class="olic-child">'+response.poczatek+'</div><div class="olic-child">'+response.destynacja+'</div><div class="olic-child">'+response.kierowca+'</div></div>\n' +
+          '                <div><button type="button" class="usun_trase" name="usun_trase" value='+response.pk+' style="width: 1.5em; height: 1.5em;">U</button></div>\n' +
+          '            </div>');
       console.log("success");
     });
   });
 
+  let trasyContainer = $('#trasy').find('.objects-list-inside')
+  $.getJSON('trasy_all', function(response){
+    console.log(response);
+    //var obj = $.parseJSON(response);
+    $.each(response, function (index, trasa) {
+      trasyContainer.append('<div class="trasa-item objects-list-item">\n' +
+        '                <div class="objects-list-item-content"><div class="olic-child">'+trasa.data+'</div><div class="olic-child">'+trasa.zleceniodawca+'</div><div class="olic-child">'+trasa.ladunek+'</div><div class="olic-child">'+trasa.poczatek+'</div><div class="olic-child">'+trasa.destynacja+'</div><div class="olic-child">'+trasa.kierowca+'</div></div>\n' +
+        '                <div><button type="button" class="usun_trase" name="usun_trase" value='+trasa.pk+' style="width: 1.5em; height: 1.5em;">U</button></div>\n' +
+        '            </div>');
+    });
+  });
+
+  $(document).on('click', '.usun_trase', function () {
+    let btn = $(this);
+    $.get('usun_trase', { t: btn.attr("value") }, function() {
+      console.log(btn);
+      btn.closest('.trasa-item').fadeOut(200, function (){ $(this).remove(); });
+      console.log("removed trasa");
+    });
+  });
+
   $('.popup-close-btn').on('click', function() {
-    var which = $(this).attr('value');
+    let which = $(this).attr('value');
     deselect($('#'+which+'-btn'), $('#'+which+'Popup'));
     return false;
   });
