@@ -81,15 +81,47 @@ def logout(request):
 
 def kierowcy(request):
     if request.method == 'POST':
-        imie = request.POST['imie']
-        nazwisko = request.POST['nazwisko']
-        pesel = request.POST['pesel']
-        telefon = request.POST['telefon']
+        if 'usun_kierowce' in request.POST:
+            kierowca_remove = request.POST.get('usun_kierowce')
+            try:
+                kierowca_to_remove = Kierowca.objects.get(pk=kierowca_remove)
+                kierowca_to_remove.delete()
+            except Kierowca.DoesNotExist:
+                pass
+        else:
+            # Obsługa dodawania nowego kierowcy
+            imie = request.POST.get('imie')
+            nazwisko = request.POST.get('nazwisko')
+            pesel = request.POST.get('pesel')
+            telefon = request.POST.get('telefon')
 
-        kierowca = Kierowca.objects.create(imie=imie, nazwisko=nazwisko, pesel=pesel, telefon=telefon)
-        kierowca.save();
+            kierowca = Kierowca.objects.create(imie=imie, nazwisko=nazwisko, pesel=pesel, telefon=telefon)
+            kierowca.save()
 
     return render(request, 'kierowcy.html', {'kier_obj': Kierowca.objects.all()})
+
+def pojazd(request):
+    if request.method == 'POST':
+        if 'usun_pojazd' in request.POST:
+            pojazd_remove = request.POST.get('usun_pojazd')
+            try:
+                pojazd_to_remove = Pojazd.objects.get(pk=pojazd_remove)
+                pojazd_to_remove.delete()
+            except Pojazd.DoesNotExist:
+                pass
+        else:
+            marka = request.POST.get('marka')
+            ubezpieczenie = request.POST.get('ubezpieczenie')
+            przeglad = request.POST.get('przeglad')
+            id_kierowca = request.POST.get('id_kierowca')
+            nr_rejestracyjny = request.POST.get('nr_rejestracyjny')
+
+            kierowca = Kierowca.objects.get(pk=id_kierowca)
+            p = Pojazd(marka=marka, ubezpieczenie=ubezpieczenie, przeglad=przeglad, id_kierowca=kierowca, nr_rejestracyjny=nr_rejestracyjny)
+            p.save()
+
+
+    return render(request, 'pojazd.html', {'poja_obj': Pojazd.objects.all()})
 
 
 def dodaj_ladunek(request):
@@ -343,21 +375,6 @@ def ladunek(request):
 
     return render(request, 'ladunek.html')
 
-
-def pojazd(request):
-    if request.method == "POST":
-        marka = request.POST['marka']
-        ubezpieczenie = request.POST['ubezpieczenie']
-        przeglad = request.POST['przeglad']
-        id_kierowca = request.POST['id_kierowca']
-        nr_rejestracyjny = request.POST['nr_rejestracyjny']
-
-        kierowca = Kierowca.objects.get(pk=id_kierowca)
-        p = Pojazd(marka=marka, ubezpieczenie=ubezpieczenie, przeglad=przeglad, id_kierowca=kierowca, nr_rejestracyjny=nr_rejestracyjny)
-        p.save()
-
-
-    return render(request, 'pojazd.html', {'poja_obj': Pojazd.objects.all()})
 
 
 def destynacja(request):

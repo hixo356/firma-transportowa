@@ -108,9 +108,10 @@
                     <td>{{ pojazd.id_kierowca }}</td>
                     <td>{{ pojazd.nr_rejestracyjny }}</td>
                     <td>
-                        <form action="usun_pojazd" method="POST">
+                        <form action="pojazd" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger" name="usun_pojazd" value="{{pojazd.id}}">Usuń
+                             <form method="post" action="pojazd">
+                            <button type="submit" class="btn btn-danger" name="usun_pojazd" value="{{pojazd.id_pojazd}}">Usuń
                             </button>
                         </form>
                     </td>

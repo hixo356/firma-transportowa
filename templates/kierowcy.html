@@ -109,7 +109,8 @@
                         <td>
                             <form action="kierowcy" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger" name="usun_kierowce" value="{{kierowca.id_kierowca}}">Zwolnij</button>
+                                <form method="post" action="kierowcy">
+                                <button type="submit" class="btn btn-danger" name="usun_kierowce" value="{{kierowca.id_kierowca}}" >Zwolnij</button>
                             </form>
                         </td>
                     </tr>

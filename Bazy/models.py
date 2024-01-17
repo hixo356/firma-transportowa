@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Feature:
     id: int
     name: str
@@ -41,13 +40,13 @@ class Kierowca(models.Model):
     nazwisko = models.CharField()
     pesel = models.CharField(max_length=11)
     telefon = models.CharField(max_length=12)
-    # id_pojazd = models.ForeignKey("Pojazd", on_delete=models.SET(''))
+
 class Pojazd(models.Model):
     id_pojazd = models.AutoField(primary_key=True)
     marka = models.CharField()
     ubezpieczenie = models.CharField(max_length=10)
     przeglad = models.CharField(max_length=10)
-    id_kierowca = models.ForeignKey(Kierowca, on_delete=models.SET(''))
+    id_kierowca = models.ForeignKey(Kierowca, on_delete=models.SET(''), null=True)
     nr_rejestracyjny = models.CharField(max_length=8)
 class Trasy(models.Model):
     id_trasa = models.AutoField(primary_key=True)
