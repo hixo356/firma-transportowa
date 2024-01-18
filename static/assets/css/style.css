@@ -41,6 +41,10 @@ a {
   text-decoration: none;
 }
 
+.linkk {
+  z-index:100;
+}
+
 a:hover {
   color: #469fdf;
   text-decoration: none;

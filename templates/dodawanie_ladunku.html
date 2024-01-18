@@ -1,5 +1,5 @@
 <div class="form-outside">
-    <div class="form-inside">
+    <div class="form-inside form-laduj">
         <p class="popup-section-title">Dodaj nowy ładunek:</p>
         <form action="trasy" method="POST" class="form-form">
              {% csrf_token %}
@@ -21,10 +21,8 @@
                  </div>
              </div>
              <div style="display: grid; grid-template-columns: 4fr 5fr;">
-                 <button style="height: 50%; margin-top: 15px; width: 90%;" type="submit" name="dodaj_ladunek" value="dod">Dodaj</button>
-                 <div style="display: flex; flex-direction: column; justify-content: center">
-                     <button style="height: calc(50% - auto); width: 90%;" type="submit" name="dodaj_ladunek" value="wyb">Dodaj<br>i wybierz</button>
-                 </div>
+                 <button style="width: 90%;" type="submit" name="dodaj_ladunek" value="dod">Dodaj</button>
+                     <button style="width: 90%;" type="submit" name="dodaj_ladunek" value="wyb">Dodaj<br>i wybierz</button>
              </div>
         </form>
     </div>

@@ -1,5 +1,5 @@
 <div class="form-outside">
-    <div class="form-inside">
+    <div class="form-inside form-laduj">
         <p class="popup-section-title">Ustal destynacje:</p>
         <form id="dest-form" action="trasy" method="POST" class="form-form">
              {% csrf_token %}
@@ -16,7 +16,7 @@
                  <input id="dest-telefon" class="form-intext" type="text" placeholder="Wpisz telefon..." name="telefon"/>
              </div>
              <div style="display: grid; grid-template-columns: 4fr 5fr;">
-                 <button style="height: 50%; margin-top: 15px; width: 90%;" type="button" id="dest-add" name="dodaj_destynacje">Gotowe</button>
+                 <button style="margin-left: 80px; width: 90%; width: 90%;" type="button" id="dest-add" name="dodaj_destynacje">Gotowe</button>
              </div>
         </form>
     </div>
