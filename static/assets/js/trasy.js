@@ -85,7 +85,7 @@ $(function() {
     $.post('dodaj_trase', data, function(response) {
       console.log(response)
       $('#trasy').find('.objects-list-inside').append('<div class="trasa-item objects-list-item">\n' +
-          '                <div class="objects-list-item-content"><div class="olic-child">' + response.data + '</div><div class="olic-child">' + response.zleceniodawca + '</div><div class="olic-child">' + response.ladunek + '</div><div class="olic-child">' + response.poczatek + '</div><div class="olic-child">' + response.destynacja + '</div><div class="olic-child">' + response.kierowca + '</div><div class="olic-child">' + response.przychod + '</div></div>\n' +
+          '                <div class="objects-list-item-content trasy-lista"><div class="olic-child">' + response.data + '</div><div class="olic-child">' + response.zleceniodawca + '</div><div class="olic-child">' + response.ladunek + '</div><div class="olic-child">' + response.poczatek + '</div><div class="olic-child">' + response.destynacja + '</div><div class="olic-child">' + response.kierowca + '</div><div class="olic-child">' + response.przychod + '</div></div>\n' +
           '                <div class="text-center"><button type="button" class="usun_trase" name="usun_trase" value=' + response.pk + '>Usuń</button></div>\n' + //<button type="button" class="edytuj_trase" name="edytuj_trase" value='+response.pk+' style="width: 1.5em; height: 1.5em;">E</button>
           '            </div>');
       console.log("success");
@@ -99,7 +99,7 @@ $(function() {
     //var obj = $.parseJSON(response);
     $.each(response, function (index, trasa) {
       trasyContainer.append('<div class="trasa-item objects-list-item">\n' +
-          '                <div class="objects-list-item-content"><div class="olic-child">' + trasa.data + '</div><div class="olic-child">' + trasa.zleceniodawca + '</div><div class="olic-child">' + trasa.ladunek + '</div><div class="olic-child">' + trasa.poczatek + '</div><div class="olic-child">' + trasa.destynacja + '</div><div class="olic-child">' + trasa.kierowca + '</div><div class="olic-child">' + trasa.przychod + '</div></div>\n' +
+          '                <div class="objects-list-item-content trasy-lista"><div class="olic-child">' + trasa.data + '</div><div class="olic-child">' + trasa.zleceniodawca + '</div><div class="olic-child">' + trasa.ladunek + '</div><div class="olic-child">' + trasa.poczatek + '</div><div class="olic-child">' + trasa.destynacja + '</div><div class="olic-child">' + trasa.kierowca + '</div><div class="olic-child">' + trasa.przychod + '</div></div>\n' +
           '                <div class="text-center"><button type="button" class="usun_trase" name="usun_trase" value=' + trasa.pk + '>Usuń</button></div>\n' + //<button type="button" class="edytuj_trase" name="edytuj_trase" value='+trasa.pk+' style="width: 1.5em; height: 1.5em;">E</button>
           '            </div>');
     });
