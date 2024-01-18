@@ -83,12 +83,16 @@
         {% if user.is_authenticated %}
         {% for feature in features %}
         <div style="width: 20%" class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="500">
-            <div class="icon-box feature-box-{{ forloop.counter }}">
-              <a href={{feature.url}}><div class="icon-box-bg"></div></a>
+          <a href={{feature.url}} class="linkk">
+          <div class="icon-box feature-box-{{ forloop.counter }}">
+              <div class="icon-box-bg"></div>
              <a href={{feature.url}} class="text-white"> <div class="icon"><i class="feature-icon-{{ forloop.counter }}"></i></div></a>
+            <a href={{feature.url}}>
               <h4 class="title"><a href={{feature.url}} class="text-white">{{feature.name}}</a></h4>
               <p class="description">{{feature.details}}</p>
+            </a>
             </div>
+            </a>
         </div>
         {% endfor %}
         {% else %}

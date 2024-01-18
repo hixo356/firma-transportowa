@@ -4,52 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+     <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style-kierowcy.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style-trasy.css' %}" rel="stylesheet">
+
 </head>
 <body>
-    <div class="trasy-form-outside">
-        <form id="trasa-form" method="POST" action="trasy" class="trasy-form-form">
+<div class="background-overlay"></div>
+    <div class="trasy-form-outside trasy-upper-form">
+            <a href="javascript:history.back()" class="back-button">
+        <i class="bi bi-arrow-left"></i> Powrót
+    </a>
+        <form id="trasa-form" method="POST" action="trasy" class="trasy-form-form align-items-center">
             {% csrf_token %}
-             <div>
-                <p>Data:</p>
-                <input type="date" name="data"/>
+             <div class="form-field ">
+                <p class="wyrownanie">Data:</p>
+                <input type="date" name="data" class="mb-0"/>
             </div>
-            <div>
+            <div class="form-field ">
                 <p>Zleceniodawca:</p>
                 <p class="sel-zlec-show"><br></p>
                 <textarea style="display: none;" name="zleceniodawca" class="sel-zlec textarea-selected-object" id="selected-zlec-ta"></textarea>
-                <button type="button" class="zlec-btn zlec popup-open-btn" value="zlec">Dodaj nowy/wybierz zleceniodawce</button>
+                <button type="button" class="zlec-btn zlec popup-open-btn" value="zlec">Dodaj nowy / wybierz</button>
             </div>
-            <div>
+            <div class="form-field ">
                 <p>Ładunek:</p>
                 <p class="sel-ladunek-show" ><br></p>
                 <textarea style="display: none;" name="ladunek" class="sel-ladunek textarea-selected-object"></textarea>
-                <button type="button" class="ladunek-btn ladunek popup-open-btn" value="ladunek">Dodaj nowy/wybierz ładunek</button>
+                <button type="button" class="ladunek-btn ladunek popup-open-btn" value="ladunek">Dodaj nowy / wybierz</button>
             </div>
-            <div>
+            <div class="form-field ">
                 <p>Początek:</p>
                 <p class="sel-pocz-show" ><br></p>
                 <textarea style="display: none;" name="poczatek" class="sel-pocz textarea-selected-object"></textarea>
                 <button type="button" class="poczatek-btn poczatek popup-open-btn" value="poczatek">Ustal początek</button>
             </div>
-            <div>
+            <div class="form-field ">
                 <p>Destynacja:</p>
                 <p class="sel-dest-show" ><br></p>
                 <textarea style="display: none;" name="destynacja" class="sel-dest textarea-selected-object"></textarea>
                 <button type="button" class="dest-btn destynacja popup-open-btn" value="dest">Ustal destynacje</button>
             </div>
-            <div>
+            <div class="form-field ">
                 <p>Kierowca:</p>
                 <p class="sel-kierowca-show" ><br></p>
                 <textarea style="display: none;" name="kierowca" class="sel-kierowca textarea-selected-object"></textarea>
                 <button type="button" class="kierowca-btn kierowca popup-open-btn" value="kierowca">Wybierz Kierowcę</button>
             </div>
-            <div>
-                <p>Przychod:</p>
-                <input type="text" name="przychod"/>
+            <div class="form-field">
+                <p class="wyrownanie">Przychód:</p>
+                <input type="text" name="przychod" class="mb-0"/>
             </div>
-            <div>
-                <input id="trasa-add-btn" type="button" name="ftrasa"/>
+            <div class="form-field ">
+                <button type="button" id="trasa-add-btn" name="ftrasa">Dodaj trasę</button>
             </div>
         </form>
     </div>
@@ -126,7 +152,7 @@
             <h2 style="position: relative; left: 15px">Wszystkie Trasy:</h2>
             <div class="objects-list-inside">
                 <div class="objects-list-item">
-                    <div class="objects-list-item-content"><div class="olic-child"><b>Data</b></div><div class="olic-child"><b>Zleceniodawca</b></div><div class="olic-child"><b>Ładunek</b></div><div class="olic-child"><b>Poczatek</b></div><div class="olic-child"><b>Destynacja</b></div><div class="olic-child"><b>Kierowca</b></div><div class="olic-child"><b>Przychód</b></div></div>
+                    <div class="objects-list-item-content trasy-lista"><div class="olic-child"><b>Data</b></div><div class="olic-child"><b>Zleceniodawca</b></div><div class="olic-child"><b>Ładunek</b></div><div class="olic-child"><b>Poczatek</b></div><div class="olic-child"><b>Destynacja</b></div><div class="olic-child"><b>Kierowca</b></div><div class="olic-child"><b>Przychód</b></div></div>
                 </div>
             </div>
         </div>

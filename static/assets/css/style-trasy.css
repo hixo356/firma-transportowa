@@ -1,0 +1,179 @@
+/* style-trasy.css */
+
+/* Styl głównego kontenera formularza */
+.trasy-form-outside {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 40px; /* Zwiększa odstęp od góry i dołu */
+}
+
+/* Styl sekcji formularza z przyciskami */
+.trasy-form-form {
+    max-width: none; /* Pozwala formularzowi na rozciągnięcie się na całą szerokość */
+}
+
+/* Styl przycisków w formularzu */
+.trasy-form-form button {
+    margin: 5px 10px; /* Zwiększa odstępy między przyciskami */
+    padding: 10px 5px; /* Zwiększa padding dla lepszej widoczności */
+    font-size: 14px; /* Zwiększa rozmiar czcionki dla lepszej czytelności */
+}
+
+/* Styl inputów formularza */
+.trasy-form-form input[type="date"],
+.trasy-form-form input[type="text"] {
+    margin-bottom: 20px; /* Dodaje więcej przestrzeni na dole inputów */
+}
+
+/* Styl dla sekcji 'Wszystkie Trasy' */
+.objects-list-outside {
+    margin-top: 30px;
+    border: none; /* Usuwa zewnętrzną ramkę */
+}
+
+/* Styl dla nagłówka 'Wszystkie Trasy' */
+.objects-list-outside h2 {
+    font-size: 24px; /* Zwiększa rozmiar czcionki nagłówka */
+    color: #124265; /* Zmienia kolor na ciemniejszy */
+    margin-left: 0; /* Resetuje lewy margines */
+    text-align: center; /* Centruje tekst */
+}
+
+/* Styl wewnętrznego kontenera sekcji 'Wszystkie Trasy' */
+.objects-list-inside {
+    border: 1px solid #ccc; /* Dodaje subtelne obramowanie */
+    border-radius: 4px; /* Dodaje zaokrąglenie rogów */
+    padding: 15px; /* Dodaje padding wewnątrz kontenera */
+    background: #f9f9f9; /* Lekko zmienia kolor tła */
+}
+
+/* Styl pojedynczego elementu listy tras */
+.objects-list-item {
+    margin-bottom: 10px; /* Dodaje odstęp między elementami listy */
+}
+
+/* Styl dla tekstu w elementach listy */
+.objects-list-item-content .olic-child {
+    padding: 8px 0; /* Dodaje pionowy padding */
+}
+
+/* Styl przycisku zamykającego popup */
+.popup-close-btn {
+    background-color: #ff4545; /* Zmienia kolor tła */
+    color: white; /* Zmienia kolor tekstu */
+    margin: 10px 10px 0px 0px !important;
+}
+
+/* Styl przycisku dodającego trasę */
+#trasa-add-btn {
+    background-color: #2487ce;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%; /* Zapewnia, że przycisk jest na całą szerokość */
+}
+
+#trasa-add-btn:hover {
+    background-color: #3194db;
+}
+
+
+/* Style for all buttons to make them the same size and the specified blue color */
+button {
+  background-color: #007bff; /* The blue color you want */
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px; /* Adjust the size as needed */
+  text-align: center;
+}
+
+/* Ensure the buttons have the same width */
+.zlec-btn, .ladunek-btn, .poczatek-btn, .dest-btn, .kierowca-btn {
+  width: 100%; /* Adjust if you want a specific width instead of full */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+/* Adjust the margin for the form elements to align properly */
+.trasy-form-form > div {
+  margin-bottom: 15px; /* Adjust as needed */
+}
+
+/* Style adjustments for inputs to align with buttons */
+.trasy-form-form input[type="date"],
+.trasy-form-form input[type="text"] {
+  width: calc(100% - 30px); /* Adjust the 30px based on padding and margin */
+  box-sizing: border-box;
+}
+
+/* Optional: if you want to make the date picker and text inputs have a similar style to buttons */
+.trasy-form-form input[type="date"],
+.trasy-form-form input[type="text"] {
+  border: 1px solid #007bff;
+  padding: 9px; /* Adjust padding to match buttons */
+  border-radius: 5px;
+}
+
+.trasy-form-form {
+    grid-template-columns: 3fr 3fr 3fr 3fr 3fr 3fr 3fr;
+}
+
+.form-field
+{
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.wyrownanie {
+    margin-bottom: 57px;
+}
+
+.olic-child {
+border: none;
+}
+
+.popup-content {
+    width: 90%;
+    margin-top: 30px;
+    height: 650px;
+}
+.popup-section-title {
+    margin-top: -60px;
+}
+.objects-list-outside {
+    margin-top: 90px;
+    height: 50vh;
+}
+.objects-list-inside {
+    height: 80%;
+}
+.objects-list-item-content {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.form-laduj {
+    margin-top: -30px;
+}
+
+.kierowcy-wrap {
+    height: 90% !important;
+    margin-top: 00px;
+    margin-bottom: 10px;
+}
+
+.trasy-lista {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.form-outside {
+    border: 0px;
+}
